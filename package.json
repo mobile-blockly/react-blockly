@@ -1,4 +1,5 @@
 {
+  "name": "react-blockly",
   "private": true,
   "description": "A React Blockly visual programming editor.",
   "author": "SerSerch <serserchit@gmail.com> (https://github.com/SerSerch)",
@@ -6,13 +7,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SerSerch/react-blockly.git"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
   "packageManager": "yarn@4.0.2",
   "engines": {
     "node": ">= 18.0.0"
@@ -60,6 +54,5 @@
     },
     "prettierPath": null,
     "preset": "react-native"
-  },
-  "name": "react-blockly"
+  }
 }
