@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useBlocklyEditor } from '@react-blockly/core';
+import { BlocklyEditor } from '@react-blockly/web';
 
 import ConfigFiles from './content';
 
@@ -14,13 +14,14 @@ function App() {
     },
   };
 
-  const { editorRef } = useBlocklyEditor({
-    workspaceConfiguration,
-    toolboxConfiguration: ConfigFiles.INITIAL_TOOLBOX_JSON,
-    initial: ConfigFiles.INITIAL_XML,
-  });
-
-  return <div className="editor" ref={editorRef}></div>;
+  return (
+    <BlocklyEditor
+      className={'editor'}
+      workspaceConfiguration={workspaceConfiguration}
+      toolboxConfiguration={ConfigFiles.INITIAL_TOOLBOX_JSON}
+      initial={ConfigFiles.INITIAL_XML}
+    />
+  );
 }
 
 export { App };
