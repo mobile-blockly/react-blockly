@@ -38,7 +38,7 @@ const {
   workspace,                       // WorkspaceSvg | null;
   xml,                             // string | null;
   json,                            // object | null;
-  editorRef,                       // MutableRefObject<HTMLDivElement | null>;
+  editorRef,                       // MutableRefObject<any>;
   toolboxConfig,                   // ToolboxDefinition;
   updateState,                     // (data?: string | object) => void;
   updateToolboxConfig,            /** (cb?: (
@@ -52,7 +52,4 @@ const {
 
 // or render native component (only for web browsers)
 <View style={{flex: 1}} ref={editorRef}/>
-
-// or render native component with typescript (only for web browsers)
-<View style={{flex: 1}} ref={editorRef as React.MutableRefObject<View>}/>
 ```
