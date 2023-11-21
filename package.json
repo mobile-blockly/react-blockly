@@ -12,6 +12,7 @@
     "node": ">= 18.0.0"
   },
   "scripts": {
+    "publish": "lerna publish --no-private",
     "test": "echo test",
     "lint": "eslint \"./packages/**/src/**/*.{js,jsx,ts,tsx}\""
   },
