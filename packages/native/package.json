@@ -1,7 +1,7 @@
 {
-  "name": "@react-blockly/core",
-  "version": "1.0.1",
-  "description": "A React Blockly visual programming editor.",
+  "name": "@react-blockly/native",
+  "version": "0.0.0",
+  "description": "A React native Blockly visual programming editor.",
   "author": "SerSerch <serserchit@gmail.com> (https://github.com/SerSerch)",
   "license": "MIT",
   "main": "lib/commonjs/index",
@@ -20,15 +20,19 @@
   },
   "keywords": [
     "react",
+    "native",
     "blockly",
     "react-native",
     "react-blockly",
-    "react-native-blockly"
+    "react-native-blockly",
+    "expo",
+    "ios",
+    "android"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SerSerch/react-blockly.git",
-    "directory": "packages/core"
+    "directory": "packages/native"
   },
   "bugs": {
     "url": "https://github.com/SerSerch/react-blockly/issues"
@@ -36,13 +40,16 @@
   "scripts": {
     "build": "bob build",
     "clean": "del lib",
-    "test": "echo test core"
+    "test": "echo test native"
   },
   "dependencies": {
+    "@react-blockly/core": "^1.0.1",
     "blockly": "^10.0.0"
   },
   "peerDependencies": {
-    "react": "*"
+    "react": "*",
+    "react-native": "*",
+    "react-native-webview": "^13.0.0"
   },
   "react-native-builder-bob": {
     "source": "src",
