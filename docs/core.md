@@ -11,3 +11,48 @@ To add @react-blockly/core to a React native app that uses yarn, run:
 ```sh
 yarn add @react-blockly/core
 ```
+
+## Usage
+
+```js
+import { useBlocklyEditor } from '@react-blockly/core';
+
+// ...
+
+const myEditor = useBlocklyEditor( // type UseBlocklyEditorType;
+  workspaceConfiguration,          // Blockly.BlocklyOptions;
+  toolboxConfiguration,            // ToolboxDefinition;
+  initial,                         // null | string | object;
+  platform,                        // null | string; (default 'web')
+  onError,                         // null | (error: any) => void;
+  onInject,                        // null | (workspace: WorkspaceSvg) => void;
+  onDispose,                       // null | (workspace: WorkspaceSvg) => void;
+  onChange);                      /** null | (state: {
+                                   *    workspace, // WorkspaceSvg
+                                   *    xml,       // string
+                                   *    json,      // object
+                                   *  }) => void;
+                                   */
+
+const {
+  workspace,                       // WorkspaceSvg | null;
+  xml,                             // string | null;
+  json,                            // object | null;
+  editorRef,                       // MutableRefObject<HTMLDivElement | null>;
+  toolboxConfig,                   // ToolboxDefinition;
+  updateState,                     // (data?: string | object) => void;
+  updateToolboxConfig,            /** (cb?: (
+                                   *    configuration?: ToolboxDefinition
+                                   *  ) => ToolboxDefinition) => void;
+                                   */
+} = myEditor;
+
+// render web component
+<div className={'my-class'} ref={editorRef}></div>
+
+// or render native component
+<View style={{flex: 1}} ref={editorRef}/>
+
+// or render native component with typescript
+<View style={{flex: 1}} ref={editorRef as React.MutableRefObject<View>}/>
+```
