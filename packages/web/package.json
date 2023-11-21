@@ -1,0 +1,59 @@
+{
+  "name": "@react-blockly/web",
+  "version": "1.0.0",
+  "description": "A React Blockly visual programming editor.",
+  "author": "SerSerch <serserchit@gmail.com> (https://github.com/SerSerch)",
+  "license": "MIT",
+  "main": "lib/commonjs/index",
+  "source": "src/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": " https://registry.npmjs.org"
+  },
+  "keywords": [
+    "react",
+    "blockly",
+    "react-blockly"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SerSerch/react-blockly.git",
+    "directory": "packages/web"
+  },
+  "bugs": {
+    "url": "https://github.com/SerSerch/react-blockly/issues"
+  },
+  "scripts": {
+    "build": "bob build",
+    "clean": "del lib",
+    "test": "echo test web"
+  },
+  "dependencies": {
+    "@react-blockly/core": "^1.0.3",
+    "blockly": "^10.0.0"
+  },
+  "peerDependencies": {
+    "react": "*"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}
