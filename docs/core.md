@@ -40,9 +40,12 @@ const {
   json,                            // object | null;
   editorRef,                       // MutableRefObject<any>;
   toolboxConfig,                   // ToolboxDefinition;
-  updateState,                     // (data?: string | object) => void;
-  updateToolboxConfig,            /** (cb?: (
-                                   *    configuration?: ToolboxDefinition
+  updateState,                    /** (cb: (
+                                   *    state: BlocklyStateType
+                                   *  ) => string | object) => void;
+                                   */
+  updateToolboxConfig,            /** (cb: (
+                                   *    configuration: ToolboxDefinition
                                    *  ) => ToolboxDefinition) => void;
                                    */
 } = myEditor;
