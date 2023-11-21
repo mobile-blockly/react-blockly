@@ -20,9 +20,10 @@
   },
   "keywords": [
     "react",
+    "blockly",
     "react-native",
     "react-blockly",
-    "blockly"
+    "react-native-blockly"
   ],
   "repository": {
     "type": "git",
