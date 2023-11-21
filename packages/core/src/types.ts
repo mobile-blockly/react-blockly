@@ -1,3 +1,5 @@
+import type { MutableRefObject } from 'react';
+
 import Blockly, { WorkspaceSvg } from 'blockly';
 import type { ToolboxDefinition } from 'blockly/core/utils/toolbox';
 
@@ -15,3 +17,22 @@ export interface UseBlocklyEditorType {
     json: object;
   }) => void;
 }
+
+export interface BlocklyInfoType {
+  workspace: WorkspaceSvg | null;
+  xml: string | null;
+  json: object | null;
+  editorRef: MutableRefObject<any>;
+  toolboxConfig: ToolboxDefinition;
+  updateToolboxConfig: (
+    cb?: (configuration?: ToolboxDefinition) => ToolboxDefinition,
+  ) => void;
+  updateState: (cb?: (state: BlocklyStateType) => string | object) => void;
+}
+
+export interface BlocklyStateType {
+  xml: string;
+  json: object;
+}
+
+export type BlocklyNewStateType = string | object;

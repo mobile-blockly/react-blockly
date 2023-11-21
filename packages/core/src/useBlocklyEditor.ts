@@ -1,4 +1,3 @@
-import type { MutableRefObject } from 'react';
 import { useEffect, useRef } from 'react';
 
 import Blockly, { Workspace, WorkspaceSvg } from 'blockly';
@@ -6,7 +5,12 @@ import type { ToolboxDefinition } from 'blockly/core/utils/toolbox';
 
 import { importFromJson } from './importFromJson';
 import { importFromXml } from './importFromXml';
-import type { UseBlocklyEditorType } from './types';
+import type {
+  BlocklyInfoType,
+  BlocklyNewStateType,
+  BlocklyStateType,
+  UseBlocklyEditorType,
+} from './types';
 
 const useBlocklyEditor = ({
   workspaceConfiguration,
@@ -17,17 +21,7 @@ const useBlocklyEditor = ({
   onChange,
   onDispose,
   platform = 'web',
-}: UseBlocklyEditorType): {
-  workspace: WorkspaceSvg | null;
-  xml: string | null;
-  json: object | null;
-  editorRef: MutableRefObject<any>;
-  toolboxConfig: ToolboxDefinition;
-  updateToolboxConfig: (
-    cb?: (configuration?: ToolboxDefinition) => ToolboxDefinition,
-  ) => void;
-  updateState: (data?: string | object) => void;
-} => {
+}: UseBlocklyEditorType): BlocklyInfoType => {
   const editorRef = useRef<any>(null);
   const workspaceRef = useRef<WorkspaceSvg | null>(null);
   const xmlRef = useRef<string | null>(null);
@@ -47,7 +41,7 @@ const useBlocklyEditor = ({
     workspaceRef.current = workspace;
 
     _onCallback(onInject, workspace);
-    updateState(initial);
+    _setState(initial);
     workspace.addChangeListener(listener);
 
     // Dispose of the workspace when our div ref goes away (Equivalent to didComponentUnmount)
@@ -93,6 +87,17 @@ const useBlocklyEditor = ({
     }
   }
 
+  function _setState(newState?: string | object) {
+    if (newState && workspaceRef.current) {
+      if (typeof newState === 'string') {
+        importFromXml(newState as string, workspaceRef.current, onError);
+      } else if (typeof newState === 'object') {
+        importFromJson(newState as object, workspaceRef.current, onError);
+      }
+      _saveData(workspaceRef.current);
+    }
+  }
+
   function updateToolboxConfig(
     cb?: (configuration: ToolboxDefinition) => ToolboxDefinition,
   ) {
@@ -111,14 +116,13 @@ const useBlocklyEditor = ({
     }
   }
 
-  function updateState(data?: string | object) {
-    if (data && workspaceRef.current) {
-      if (typeof data === 'string') {
-        importFromXml(data as string, workspaceRef.current, onError);
-      } else if (typeof data === 'object') {
-        importFromJson(data as object, workspaceRef.current, onError);
-      }
-      _saveData(workspaceRef.current);
+  function updateState(cb?: (state: BlocklyStateType) => BlocklyNewStateType) {
+    if (cb && xmlRef.current && jsonRef.current) {
+      const newState: BlocklyNewStateType = cb({
+        xml: xmlRef.current,
+        json: jsonRef.current,
+      });
+      _setState(newState);
     }
   }
 
