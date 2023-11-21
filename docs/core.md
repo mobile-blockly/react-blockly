@@ -50,9 +50,9 @@ const {
 // render web component
 <div className={'my-class'} ref={editorRef}></div>
 
-// or render native component
+// or render native component (only for web browsers)
 <View style={{flex: 1}} ref={editorRef}/>
 
-// or render native component with typescript
+// or render native component with typescript (only for web browsers)
 <View style={{flex: 1}} ref={editorRef as React.MutableRefObject<View>}/>
 ```
