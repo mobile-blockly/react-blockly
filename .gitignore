@@ -94,7 +94,15 @@ yarn-error.*
 *.pem
 
 # local env files
+.env
 .env*.local
 
 # typescript
 *.tsbuildinfo
+
+# dependencies
+.pnp
+.pnp.js
+
+# testing
+coverage/
