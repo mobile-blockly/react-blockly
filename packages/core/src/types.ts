@@ -25,9 +25,9 @@ export interface BlocklyInfoType {
   editorRef: MutableRefObject<any>;
   toolboxConfig: ToolboxDefinition;
   updateToolboxConfig: (
-    cb?: (configuration?: ToolboxDefinition) => ToolboxDefinition,
+    cb: (configuration: ToolboxDefinition) => ToolboxDefinition,
   ) => void;
-  updateState: (cb?: (state: BlocklyStateType) => string | object) => void;
+  updateState: (cb: (state: BlocklyStateType) => string | object) => void;
 }
 
 export interface BlocklyStateType {

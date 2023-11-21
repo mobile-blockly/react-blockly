@@ -81,8 +81,8 @@ const useBlocklyEditor = ({
         return true;
       }
       return false;
-    } catch (e) {
-      _onCallback(onError, e);
+    } catch (err) {
+      _onCallback(onError, err);
       return false;
     }
   }
@@ -99,30 +99,38 @@ const useBlocklyEditor = ({
   }
 
   function updateToolboxConfig(
-    cb?: (configuration: ToolboxDefinition) => ToolboxDefinition,
+    cb: (configuration: ToolboxDefinition) => ToolboxDefinition,
   ) {
-    if (cb) {
-      const configuration: ToolboxDefinition = cb(
-        toolboxConfigurationRef.current,
-      );
-      if (
-        configuration &&
-        workspaceRef.current &&
-        !workspaceConfigurationRef.current.readOnly
-      ) {
-        toolboxConfigurationRef.current = configuration;
-        workspaceRef.current.updateToolbox(configuration);
+    try {
+      if (cb) {
+        const configuration: ToolboxDefinition = cb(
+          toolboxConfigurationRef.current,
+        );
+        if (
+          configuration &&
+          workspaceRef.current &&
+          !workspaceConfigurationRef.current.readOnly
+        ) {
+          toolboxConfigurationRef.current = configuration;
+          workspaceRef.current.updateToolbox(configuration);
+        }
       }
+    } catch (err) {
+      _onCallback(onError, err);
     }
   }
 
-  function updateState(cb?: (state: BlocklyStateType) => BlocklyNewStateType) {
-    if (cb && xmlRef.current && jsonRef.current) {
-      const newState: BlocklyNewStateType = cb({
-        xml: xmlRef.current,
-        json: jsonRef.current,
-      });
-      _setState(newState);
+  function updateState(cb: (state: BlocklyStateType) => BlocklyNewStateType) {
+    try {
+      if (cb && xmlRef.current && jsonRef.current) {
+        const newState: BlocklyNewStateType = cb({
+          xml: xmlRef.current,
+          json: jsonRef.current,
+        });
+        _setState(newState);
+      }
+    } catch (err) {
+      _onCallback(onError, err);
     }
   }
 
