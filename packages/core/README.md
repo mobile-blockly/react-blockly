@@ -12,8 +12,8 @@ See [Installation Instructions](https://github.com/SerSerch/react-blockly/blob/m
 
 ## Example
 
-[@react-blockly/web-example](https://github.com/SerSerch/react-blockly/blob/main/packages/web-example)\
-[@react-blockly/native-example](https://github.com/SerSerch/react-blockly/blob/main/packages/native-example)
+[@react-blockly/web-example](https://github.com/SerSerch/react-blockly/blob/main/examples/web-example)\
+[@react-blockly/native-example](https://github.com/SerSerch/react-blockly/blob/main/examples/native-example)
 
 ## License
 
