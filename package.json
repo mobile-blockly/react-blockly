@@ -15,8 +15,9 @@
   "scripts": {
     "web": "yarn workspace @react-blockly/web-example",
     "native": "yarn workspace @react-blockly/native-example",
-    "pub": "lerna publish --no-private",
-    "test": "echo test",
+    "build": "lerna run build --no-private",
+    "release": "lerna publish --no-private",
+    "test": "jest",
     "lint": "eslint \"./packages/**/src/**/*.{js,jsx,ts,tsx}\""
   },
   "devDependencies": {
@@ -62,7 +63,6 @@
     "testEnvironment": "node",
     "testRegex": "/__tests__/.*\\.(test|spec)\\.(js|tsx?)$",
     "setupFiles": [
-      "<rootDir>/jest/setup.js"
     ],
     "transformIgnorePatterns": [
       "node_modules/(?!(@react-native|react-native|react-native-reanimated)/)"
