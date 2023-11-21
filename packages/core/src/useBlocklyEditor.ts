@@ -96,7 +96,7 @@ const useBlocklyEditor = ({
   }
 
   function updateToolboxConfig(
-    cb?: (configuration?: ToolboxDefinition) => ToolboxDefinition,
+    cb?: (configuration: ToolboxDefinition) => ToolboxDefinition,
   ) {
     if (cb) {
       const configuration: ToolboxDefinition = cb(
