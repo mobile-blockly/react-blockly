@@ -12,7 +12,7 @@ See [Installation Instructions](https://github.com/SerSerch/react-blockly/blob/m
 
 ## Example
 
-[@react-blockly/native-example](https://github.com/SerSerch/react-blockly/blob/main/packages/native-example)
+[@react-blockly/native-example](https://github.com/SerSerch/react-blockly/blob/main/examples/native-example)
 
 ## License
 
