@@ -1,5 +1,7 @@
 # React Blockly with Expo Go
 
+This project was bootstrapped with [Expo](https://github.com/expo/expo).
+
 ## Available Scripts
 
 In the project directory, you can run:
