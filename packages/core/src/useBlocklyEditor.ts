@@ -21,19 +21,17 @@ const useBlocklyEditor = ({
   workspace: WorkspaceSvg | null;
   xml: string | null;
   json: object | null;
-  editorRef: MutableRefObject<HTMLDivElement | null>;
+  editorRef: MutableRefObject<any>;
   toolboxConfig: ToolboxDefinition;
   updateToolboxConfig: (
     cb?: (configuration?: ToolboxDefinition) => ToolboxDefinition,
   ) => void;
   updateState: (data?: string | object) => void;
 } => {
-  const editorRef = useRef<HTMLDivElement | null>(null);
+  const editorRef = useRef<any>(null);
   const workspaceRef = useRef<WorkspaceSvg | null>(null);
   const xmlRef = useRef<string | null>(null);
   const jsonRef = useRef<object | null>(null);
-  // we explicitly don't want to recreate the workspace when the configuration changes
-  // so, we'll keep it in a ref and update as necessary in an effect hook
   const workspaceConfigurationRef = useRef(workspaceConfiguration);
   const toolboxConfigurationRef = useRef(toolboxConfiguration);
 
