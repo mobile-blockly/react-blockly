@@ -1,6 +1,6 @@
 {
   "name": "@react-blockly/core",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A React Blockly visual programming editor.",
   "author": "SerSerch <serserchit@gmail.com> (https://github.com/SerSerch)",
   "license": "MIT",
