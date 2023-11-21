@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 
 import { BlocklyEditor } from '@react-blockly/native';
 
@@ -16,13 +16,13 @@ export function App() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <BlocklyEditor
         workspaceConfiguration={workspaceConfiguration}
         toolboxConfiguration={ConfigFiles.INITIAL_TOOLBOX_JSON}
         initial={ConfigFiles.INITIAL_XML}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
