@@ -26,7 +26,7 @@ import { BlocklyEditor } from '@react-blockly/native';
 // ...
 
 <BlocklyEditor
-  workspaceConfiguration={workspaceConfiguration} // type UseBlocklyEditorType;
+  workspaceConfiguration={workspaceConfiguration} // Blockly.BlocklyOptions;
   toolboxConfiguration={toolboxConfiguration}     // ToolboxDefinition;
   initial={initial}                               // null | string | object;
 />
