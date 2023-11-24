@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import Blockly, { Workspace, WorkspaceSvg } from 'blockly';
+import Blockly, { WorkspaceSvg } from 'blockly';
 import type { ToolboxDefinition } from 'blockly/core/utils/toolbox';
 
 import { importFromJson } from './importFromJson';
@@ -24,8 +24,10 @@ const useBlocklyEditor = ({
 }: UseBlocklyEditorType): BlocklyInfoType => {
   const editorRef = useRef<any>(null);
   const workspaceRef = useRef<WorkspaceSvg | null>(null);
-  const xmlRef = useRef<string | null>(null);
-  const jsonRef = useRef<object | null>(null);
+  const xmlRef = useRef<string>(
+    '<xml xmlns="https://developers.google.com/blockly/xml"></xml>',
+  );
+  const jsonRef = useRef<object>({});
   const workspaceConfigurationRef = useRef(workspaceConfiguration);
   const toolboxConfigurationRef = useRef(toolboxConfiguration);
 
@@ -40,7 +42,11 @@ const useBlocklyEditor = ({
     });
     workspaceRef.current = workspace;
 
-    _onCallback(onInject, workspace);
+    _onCallback(onInject, {
+      workspace,
+      xml: xmlRef.current,
+      json: jsonRef.current,
+    });
     _setState(initial);
     workspace.addChangeListener(listener);
 
@@ -48,7 +54,11 @@ const useBlocklyEditor = ({
     return () => {
       workspace.removeChangeListener(listener);
       workspace.dispose();
-      _onCallback(onDispose, workspace);
+      _onCallback(onDispose, {
+        workspace,
+        xml: xmlRef.current,
+        json: jsonRef.current,
+      });
     };
     // eslint-disable-next-line
   }, []);
@@ -65,7 +75,7 @@ const useBlocklyEditor = ({
     }
   }
 
-  function _saveData(workspace: Workspace): boolean {
+  function _saveData(workspace: WorkspaceSvg): boolean {
     try {
       const newXml = Blockly.Xml.domToText(
         Blockly.Xml.workspaceToDom(workspace),
@@ -122,7 +132,7 @@ const useBlocklyEditor = ({
 
   function updateState(cb: (state: BlocklyStateType) => BlocklyNewStateType) {
     try {
-      if (cb && xmlRef.current && jsonRef.current) {
+      if (cb) {
         const newState: BlocklyNewStateType = cb({
           xml: xmlRef.current,
           json: jsonRef.current,
@@ -135,11 +145,7 @@ const useBlocklyEditor = ({
   }
 
   return {
-    workspace: workspaceRef.current,
-    xml: xmlRef.current,
-    json: jsonRef.current,
     editorRef,
-    toolboxConfig: toolboxConfigurationRef.current as ToolboxDefinition,
     updateToolboxConfig,
     updateState,
   };

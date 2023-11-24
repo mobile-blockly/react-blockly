@@ -9,21 +9,13 @@ export interface UseBlocklyEditorType {
   platform?: string;
   initial?: string | object;
   onError?: (error: any) => void;
-  onInject?: (workspace: WorkspaceSvg) => void;
-  onDispose?: (workspace: WorkspaceSvg) => void;
-  onChange?: (state: {
-    workspace: WorkspaceSvg;
-    xml: string;
-    json: object;
-  }) => void;
+  onInject?: (state: BlocklyCbStateType) => void;
+  onDispose?: (state: BlocklyCbStateType) => void;
+  onChange?: (state: BlocklyCbStateType) => void;
 }
 
 export interface BlocklyInfoType {
-  workspace: WorkspaceSvg | null;
-  xml: string | null;
-  json: object | null;
   editorRef: MutableRefObject<any>;
-  toolboxConfig: ToolboxDefinition;
   updateToolboxConfig: (
     cb: (configuration: ToolboxDefinition) => ToolboxDefinition,
   ) => void;
@@ -33,6 +25,10 @@ export interface BlocklyInfoType {
 export interface BlocklyStateType {
   xml: string;
   json: object;
+}
+
+export interface BlocklyCbStateType extends BlocklyStateType {
+  workspace: WorkspaceSvg | null;
 }
 
 export type BlocklyNewStateType = string | object;
