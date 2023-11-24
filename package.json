@@ -10,7 +10,8 @@
   ],
   "packageManager": "yarn@4.0.2",
   "engines": {
-    "node": ">= 18.0.0"
+    "node": ">=18.0.0",
+    "yarn": ">=4.0.0"
   },
   "scripts": {
     "web": "yarn workspace @react-blockly/web-example",
@@ -62,8 +63,7 @@
   "jest": {
     "testEnvironment": "node",
     "testRegex": "/__tests__/.*\\.(test|spec)\\.(js|tsx?)$",
-    "setupFiles": [
-    ],
+    "setupFiles": [],
     "transformIgnorePatterns": [
       "node_modules/(?!(@react-native|react-native|react-native-reanimated)/)"
     ],
