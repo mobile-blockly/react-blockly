@@ -58,7 +58,7 @@
     "react-native-webview": "^13.0.0",
     "react-scripts": "^5.0.1",
     "sharp-cli": "^4.1.1",
-    "typescript": "^5.2.2"
+    "typescript": "5.2.2"
   },
   "resolutions": {
     "@types/react": "17.0.21"
