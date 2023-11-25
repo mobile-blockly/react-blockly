@@ -103,7 +103,6 @@ const useBlocklyNativeEditor = ({
   }
 
   function _onCallback(cb?: (arg?: any) => void, arg?: any) {
-    console.log('cd', cb);
     if (cb) {
       cb(arg);
     }
