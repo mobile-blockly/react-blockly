@@ -1,18 +1,6 @@
-import type { UseBlocklyEditorType } from '@react-blockly/core';
-import Blockly from 'blockly';
-import type { ToolboxDefinition } from 'blockly/core/utils/toolbox';
+import type { UseBlocklyNativeEditorType } from '@react-blockly/core';
 
-export interface BlocklyEditorType extends UseBlocklyEditorType {
+export interface BlocklyEditorType extends UseBlocklyNativeEditorType {
   style?: object | Array<object>;
   forceData?: any;
-}
-
-export interface HtmlScriptType {
-  workspaceConfiguration: Blockly.BlocklyOptions;
-  toolboxConfiguration: ToolboxDefinition;
-  script?: string;
-}
-
-export interface HtmlRenderType extends HtmlScriptType {
-  style?: string;
 }
