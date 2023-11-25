@@ -25,21 +25,13 @@ const myEditor = useBlocklyEditor( // type UseBlocklyEditorType;
   initial,                         // null | string | object;
   platform,                        // null | string; (default 'web')
   onError,                         // null | (error: any) => void;
-  onInject,                        // null | (workspace: WorkspaceSvg) => void;
-  onDispose,                       // null | (workspace: WorkspaceSvg) => void;
-  onChange);                      /** null | (state: {
-                                   *    workspace, // WorkspaceSvg
-                                   *    xml,       // string
-                                   *    json,      // object
-                                   *  }) => void;
-                                   */
+  onInject,                        // null | (state: BlocklyCbStateType) => void;
+  onDispose,                       // null | (state: BlocklyCbStateType) => void;
+  onChange,                        // null | (state: BlocklyCbStateType) => void;
+);
 
 const {
-  workspace,                       // WorkspaceSvg | null;
-  xml,                             // string | null;
-  json,                            // object | null;
   editorRef,                       // MutableRefObject<any>;
-  toolboxConfig,                   // ToolboxDefinition;
   updateState,                    /** (cb: (
                                    *    state: BlocklyStateType
                                    *  ) => string | object) => void;
@@ -55,4 +47,52 @@ const {
 
 // or render native component (only for web browsers)
 <View style={{flex: 1}} ref={editorRef}/>
+```
+<br/>
+
+### Only for react native [WebView](https://github.com/react-native-webview/react-native-webview/blob/master/docs/Reference.md)
+
+```js
+import { WebView } from 'react-native-webview';
+import { useBlocklyNativeEditor } from '@react-blockly/core';
+
+// ...
+
+const myEditor = useBlocklyNativeEditor( // type UseBlocklyNativeEditorType;
+  workspaceConfiguration,          // Blockly.BlocklyOptions;
+  toolboxConfiguration,            // ToolboxDefinition;
+  initial,                         // null | string | object;
+  platform,                        // null | string; (default 'web')
+  onError,                         // null | (error: any) => void;
+  onInject,                        // null | (state: BlocklyStateType) => void;
+  onDispose,                       // null | (state: BlocklyStateType) => void;
+  onChange,                        // null | (state: BlocklyStateType) => void;
+);
+
+const {
+  editorRef,                       // MutableRefObject<any>;
+  htmlRender,                      // (params?: HtmlRenderType) => string;
+  onMessage,                       // (e: WebViewMessageEvent) => void;
+  onLoadEnd,                       // (e: WebViewNavigationEvent | WebViewErrorEvent) => void;
+  updateState,                    /** (cb: (
+                                   *    state: BlocklyStateType
+                                   *  ) => string | object) => void;
+                                   */
+  updateToolboxConfig,            /** (cb: (
+                                   *    configuration: ToolboxDefinition
+                                   *  ) => ToolboxDefinition) => void;
+                                   */
+} = myEditor;
+
+// render only for native WebView component
+<WebView
+  style={{ flex: 1 }}
+  ref={editorRef}
+  originWhitelist={['*']}
+  source={{
+    html: htmlRender(),
+  }}
+  onMessage={onMessage}
+  onLoadEnd={onLoadEnd}
+/>
 ```
