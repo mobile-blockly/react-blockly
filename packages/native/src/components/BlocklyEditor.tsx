@@ -1,47 +1,47 @@
-import React, { memo, useRef } from 'react';
+import React, { memo, type PropsWithChildren } from 'react';
 import { Platform, View } from 'react-native';
 
-import { useBlocklyEditor } from '@react-blockly/core';
+import { useBlocklyEditor, useBlocklyNativeEditor } from '@react-blockly/core';
 import { WebView } from 'react-native-webview';
 
-import { htmlRender } from '../html/htmlRender';
 import type { BlocklyEditorType } from '../types';
 
 function EditorComponent(props: BlocklyEditorType) {
-  const { style, workspaceConfiguration, toolboxConfiguration, initial } =
-    props;
   const { editorRef: editorWebRef } = useBlocklyEditor({
     ...props,
     platform: Platform.OS,
   });
-  const editorRef = useRef(null);
-
-  const params = {
-    workspaceConfiguration,
-    toolboxConfiguration,
-    initial,
-  };
+  const {
+    editorRef: editorNativeRef,
+    onMessage,
+    onLoadEnd,
+    htmlRender,
+  } = useBlocklyNativeEditor({
+    ...props,
+    platform: Platform.OS,
+  });
 
   return Platform.OS === 'web' ? (
-    <View style={[{ flex: 1 }, style]} ref={editorWebRef} />
+    <View style={[{ flex: 1 }, props.style]} ref={editorWebRef} />
   ) : (
     <WebView
-      style={[{ flex: 1 }, style]}
-      ref={editorRef}
+      style={[{ flex: 1 }, props.style]}
+      ref={editorNativeRef}
       originWhitelist={['*']}
       source={{
-        html: htmlRender(params),
+        html: htmlRender(),
       }}
-      onMessage={e => {
-        const { event, arg } = JSON.parse(e.nativeEvent?.data);
-        console.log(event, arg);
-      }}
+      onMessage={onMessage}
+      onLoadEnd={onLoadEnd}
     />
   );
 }
 
-function propsAreEqual() {
-  return true;
+function propsAreEqual(
+  prevProps: Readonly<PropsWithChildren<BlocklyEditorType>>,
+  nextProps: Readonly<PropsWithChildren<BlocklyEditorType>>,
+) {
+  return prevProps.forceData === nextProps.forceData;
 }
 
 export const BlocklyEditor = memo(
