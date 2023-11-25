@@ -50,7 +50,6 @@ const useBlocklyEditor = ({
     _setState(initial);
     workspace.addChangeListener(listener);
 
-    // Dispose of the workspace when our div ref goes away (Equivalent to didComponentUnmount)
     return () => {
       workspace.removeChangeListener(listener);
       workspace.dispose();
