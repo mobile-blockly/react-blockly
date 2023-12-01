@@ -7,6 +7,7 @@ import { importFromJson } from './importFromJson';
 import { importFromXml } from './importFromXml';
 import type {
   BlocklyInfoType,
+  BlocklyInitType,
   BlocklyNewStateType,
   BlocklyStateType,
   UseBlocklyEditorType,
@@ -28,39 +29,60 @@ const useBlocklyEditor = ({
     '<xml xmlns="https://developers.google.com/blockly/xml"></xml>',
   );
   const jsonRef = useRef<object>({});
-  const workspaceConfigurationRef = useRef(workspaceConfiguration);
-  const toolboxConfigurationRef = useRef(toolboxConfiguration);
+  const toolboxConfigRef = useRef<ToolboxDefinition | null>(null);
+  const readOnly = useRef<boolean>(false);
 
-  // Workspace creation
   useEffect(() => {
-    if (!editorRef.current || platform !== 'web') {
-      return;
+    if (workspaceConfiguration && toolboxConfiguration) {
+      init({ workspaceConfiguration, toolboxConfiguration, initial });
     }
-    const workspace = Blockly.inject(editorRef.current, {
-      ...workspaceConfigurationRef.current,
-      toolbox: toolboxConfigurationRef.current,
-    });
-    workspaceRef.current = workspace;
-
-    _onCallback(onInject, {
-      workspace,
-      xml: xmlRef.current,
-      json: jsonRef.current,
-    });
-    _setState(initial);
-    workspace.addChangeListener(listener);
 
     return () => {
-      workspace.removeChangeListener(listener);
-      workspace.dispose();
-      _onCallback(onDispose, {
+      if (workspaceRef.current) {
+        workspaceRef.current.removeChangeListener(listener);
+        workspaceRef.current.dispose();
+        _onCallback(onDispose, {
+          workspace: workspaceRef.current,
+          xml: xmlRef.current,
+          json: jsonRef.current,
+        });
+      }
+    };
+  }, []);
+
+  function init({
+    workspaceConfiguration,
+    toolboxConfiguration,
+    initial,
+  }: BlocklyInitType) {
+    if (
+      !editorRef.current ||
+      toolboxConfigRef.current ||
+      platform !== 'web' ||
+      !workspaceConfiguration ||
+      !toolboxConfiguration
+    ) {
+      return;
+    }
+
+    const workspace = Blockly.inject(editorRef.current, {
+      ...workspaceConfiguration,
+      toolbox: toolboxConfiguration,
+    });
+
+    if (workspace) {
+      workspaceRef.current = workspace;
+      toolboxConfigRef.current = toolboxConfiguration;
+      readOnly.current = !!workspaceConfiguration.readOnly;
+      _onCallback(onInject, {
         workspace,
         xml: xmlRef.current,
         json: jsonRef.current,
       });
-    };
-    // eslint-disable-next-line
-  }, []);
+      _setState(initial);
+      workspace.addChangeListener(listener);
+    }
+  }
 
   function listener(event: Blockly.Events.Abstract) {
     if (!event.isUiEvent && workspaceRef.current) {
@@ -111,16 +133,10 @@ const useBlocklyEditor = ({
     cb: (configuration: ToolboxDefinition) => ToolboxDefinition,
   ) {
     try {
-      if (cb) {
-        const configuration: ToolboxDefinition = cb(
-          toolboxConfigurationRef.current,
-        );
-        if (
-          configuration &&
-          workspaceRef.current &&
-          !workspaceConfigurationRef.current.readOnly
-        ) {
-          toolboxConfigurationRef.current = configuration;
+      if (cb && toolboxConfigRef.current) {
+        const configuration: ToolboxDefinition = cb(toolboxConfigRef.current);
+        if (configuration && workspaceRef.current && !readOnly.current) {
+          toolboxConfigRef.current = configuration;
           workspaceRef.current.updateToolbox(configuration);
         }
       }
@@ -143,8 +159,17 @@ const useBlocklyEditor = ({
     }
   }
 
+  function state(): BlocklyStateType {
+    return {
+      xml: xmlRef.current,
+      json: jsonRef.current,
+    };
+  }
+
   return {
     editorRef,
+    init,
+    state,
     updateToolboxConfig,
     updateState,
   };

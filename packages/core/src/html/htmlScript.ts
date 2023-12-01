@@ -3,7 +3,6 @@ export function htmlScript(script: string = ''): string {
 <script>
 window.onload = () => {
   const onCallback = (event, data) => {
-
     if (window.ReactNativeWebView) {
       const dataString = JSON.stringify({event, data});
       window.ReactNativeWebView.postMessage(dataString);
@@ -16,9 +15,7 @@ window.onload = () => {
       Blockly.Xml.domToWorkspace(Blockly.utils.xml.textToDom(xml), workspace);
       return true;
     } catch (err) {
-      if (onError) {
-        onCallback('onError', err?.toString());
-      }
+      onCallback('onError', err?.toString());
       return false;
     }
   };
@@ -27,25 +24,23 @@ window.onload = () => {
     try {
       Blockly.serialization.workspaces.load(json, workspace);
       return true;
-    } catch (e) {
-      if (onError) {
-        onError(e);
-      }
+    } catch (err) {
+      onCallback('onError', err?.toString());
       return false;
     }
   };
 
   const BlocklyEditor = () => {
     let workspace = null;
-    let toolboxConfig = {};
+    let toolboxConfig = null;
     let xml = '<xml xmlns="https://developers.google.com/blockly/xml"></xml>';
     let json = {};
     let readOnly = false;
 
 
-    function init({workspaceConfiguration={}, toolboxConfiguration={}, initial}) {
+    function init({workspaceConfiguration, toolboxConfiguration, initial}) {
       const element = document.querySelector('#blocklyEditor');
-      if (!Blockly || element.innerHTML || !element) {
+      if (!Blockly || !element || toolboxConfig || !workspaceConfiguration || !toolboxConfiguration) {
         return;
       }
 
@@ -57,7 +52,7 @@ window.onload = () => {
       if (worksp) {
         workspace = worksp;
         toolboxConfig = toolboxConfiguration;
-        readOnly = workspaceConfiguration.readOnly;
+        readOnly = !!workspaceConfiguration.readOnly;
         onCallback('onInject', {xml, json});
         _setState(initial);
         workspace.addChangeListener(listener);
@@ -100,14 +95,18 @@ window.onload = () => {
     }
 
     function updateToolboxConfig(configuration) {
-      if (
-        configuration &&
-        workspace &&
-        !readOnly
-      ) {
-        toolboxConfig = configuration;
-        workspace.updateToolbox(configuration);
-        onCallback('toolboxConfig', configuration);
+      try {
+        if (
+          configuration &&
+          workspace &&
+          !readOnly
+        ) {
+          toolboxConfig = configuration;
+          workspace.updateToolbox(configuration);
+          onCallback('toolboxConfig', configuration);
+        }
+      } catch (err) {
+        onCallback('onError', err?.toString());
       }
     }
 
@@ -123,13 +122,13 @@ window.onload = () => {
 
     function state() {
       return {
-        workspace,
         xml,
         json,
       };
     }
 
     return {
+      workspace,
       init,
       state,
       updateToolboxConfig,

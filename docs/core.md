@@ -20,21 +20,23 @@ import { useBlocklyEditor } from '@react-blockly/core';
 // ...
 
 const myEditor = useBlocklyEditor( // type UseBlocklyEditorType;
-  workspaceConfiguration,          // Blockly.BlocklyOptions;
-  toolboxConfiguration,            // ToolboxDefinition;
+  workspaceConfiguration,          // null | Blockly.BlocklyOptions;
+  toolboxConfiguration,            // null | ToolboxDefinition;
   initial,                         // null | string | object;
   platform,                        // null | string; (default 'web')
   onError,                         // null | (error: any) => void;
   onInject,                        // null | (state: BlocklyCbStateType) => void;
   onDispose,                       // null | (state: BlocklyCbStateType) => void;
-  onChange,                        // null | (state: BlocklyCbStateType) => void;
+  onChange,                        // null | (state: BlocklyStateType) => void;
 );
 
 const {
   editorRef,                       // MutableRefObject<any>;
+  init,                            // (params: BlocklyInitType) => void;
+  state,                           // () => BlocklyStateType;
   updateState,                    /** (cb: (
                                    *    state: BlocklyStateType
-                                   *  ) => string | object) => void;
+                                   *  ) => object) => void;
                                    */
   updateToolboxConfig,            /** (cb: (
                                    *    configuration: ToolboxDefinition
@@ -59,8 +61,8 @@ import { useBlocklyNativeEditor } from '@react-blockly/core';
 // ...
 
 const myEditor = useBlocklyNativeEditor( // type UseBlocklyNativeEditorType;
-  workspaceConfiguration,          // Blockly.BlocklyOptions;
-  toolboxConfiguration,            // ToolboxDefinition;
+  workspaceConfiguration,          // null | Blockly.BlocklyOptions;
+  toolboxConfiguration,            // null | ToolboxDefinition;
   initial,                         // null | string | object;
   platform,                        // null | string; (default 'web')
   onError,                         // null | (error: any) => void;
@@ -71,12 +73,14 @@ const myEditor = useBlocklyNativeEditor( // type UseBlocklyNativeEditorType;
 
 const {
   editorRef,                       // MutableRefObject<any>;
+  init,                            // (params: BlocklyInitType) => void;
+  state,                           // () => BlocklyStateType;
   htmlRender,                      // (params?: HtmlRenderType) => string;
   onMessage,                       // (e: WebViewMessageEvent) => void;
   onLoadEnd,                       // (e: WebViewNavigationEvent | WebViewErrorEvent) => void;
   updateState,                    /** (cb: (
                                    *    state: BlocklyStateType
-                                   *  ) => string | object) => void;
+                                   *  ) => object) => void;
                                    */
   updateToolboxConfig,            /** (cb: (
                                    *    configuration: ToolboxDefinition

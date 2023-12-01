@@ -7,6 +7,7 @@ import { htmlRender } from './html/htmlRender';
 import { htmlScript } from './html/htmlScript';
 import { htmlStyle } from './html/htmlStyle';
 import type {
+  BlocklyInitType,
   BlocklyNativeInfoType,
   BlocklyNewStateType,
   BlocklyStateType,
@@ -29,25 +30,46 @@ const useBlocklyNativeEditor = ({
     '<xml xmlns="https://developers.google.com/blockly/xml"></xml>',
   );
   const jsonRef = useRef<object>({});
-  const toolboxConfigurationRef = useRef(toolboxConfiguration);
+  const toolboxConfigRef = useRef<ToolboxDefinition | null>(null);
+  const readOnly = useRef<boolean>(false);
 
   useEffect(() => {
     return () => {
-      _onCallback(onDispose, {
-        xml: xmlRef.current,
-        json: jsonRef.current,
-      });
+      if (toolboxConfigRef.current) {
+        _onCallback(onDispose, {
+          xml: xmlRef.current,
+          json: jsonRef.current,
+        });
+      }
     };
   }, []);
 
-  // Workspace creation
+  function init({
+    workspaceConfiguration,
+    toolboxConfiguration,
+    initial,
+  }: BlocklyInitType) {
+    if (
+      !editorRef.current ||
+      toolboxConfigRef.current ||
+      platform === 'web' ||
+      !workspaceConfiguration ||
+      !toolboxConfiguration
+    ) {
+      return;
+    }
+
+    readOnly.current = !!workspaceConfiguration.readOnly;
+    postData('init', {
+      workspaceConfiguration,
+      toolboxConfiguration,
+      initial,
+    });
+  }
+
   function onLoadEnd() {
-    if (editorRef.current) {
-      postData('init', {
-        workspaceConfiguration,
-        toolboxConfiguration,
-        initial,
-      });
+    if (workspaceConfiguration && toolboxConfiguration) {
+      init({ workspaceConfiguration, toolboxConfiguration, initial });
     }
   }
 
@@ -83,7 +105,7 @@ const useBlocklyNativeEditor = ({
           _onCallback(onError, data);
           break;
         case 'toolboxConfig':
-          toolboxConfigurationRef.current = data;
+          toolboxConfigRef.current = data;
           break;
       }
     } catch (err) {
@@ -112,11 +134,9 @@ const useBlocklyNativeEditor = ({
     cb: (configuration: ToolboxDefinition) => ToolboxDefinition,
   ) {
     try {
-      if (cb) {
-        const configuration: ToolboxDefinition = cb(
-          toolboxConfigurationRef.current,
-        );
-        if (configuration) {
+      if (cb && toolboxConfigRef.current) {
+        const configuration: ToolboxDefinition = cb(toolboxConfigRef.current);
+        if (configuration && !readOnly.current) {
           postData('updateToolboxConfig', configuration);
         }
       }
@@ -139,8 +159,17 @@ const useBlocklyNativeEditor = ({
     }
   }
 
+  function state(): BlocklyStateType {
+    return {
+      xml: xmlRef.current,
+      json: jsonRef.current,
+    };
+  }
+
   return {
     editorRef,
+    init,
+    state,
     onMessage,
     onLoadEnd,
     htmlRender: _editorRender,
