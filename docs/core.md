@@ -14,6 +14,8 @@ yarn add @react-blockly/core
 
 ## Usage
 
+[BlocklyOptions interface](https://developers.google.com/blockly/reference/js/blockly.blocklyoptions_interface)
+
 ```js
 import { useBlocklyEditor } from '@react-blockly/core';
 
@@ -21,7 +23,6 @@ import { useBlocklyEditor } from '@react-blockly/core';
 
 const myEditor = useBlocklyEditor( // type UseBlocklyEditorType;
   workspaceConfiguration,          // null | Blockly.BlocklyOptions;
-  toolboxConfiguration,            // null | ToolboxDefinition;
   initial,                         // null | string | object;
   platform,                        // null | string; (default 'web')
   onError,                         // null | (error: any) => void;
@@ -54,6 +55,8 @@ const {
 
 ### Only for react native [WebView](https://github.com/react-native-webview/react-native-webview/blob/master/docs/Reference.md)
 
+[BlocklyOptions interface](https://developers.google.com/blockly/reference/js/blockly.blocklyoptions_interface)
+
 ```js
 import { WebView } from 'react-native-webview';
 import { useBlocklyNativeEditor } from '@react-blockly/core';
@@ -62,9 +65,8 @@ import { useBlocklyNativeEditor } from '@react-blockly/core';
 
 const myEditor = useBlocklyNativeEditor( // type UseBlocklyNativeEditorType;
   workspaceConfiguration,          // null | Blockly.BlocklyOptions;
-  toolboxConfiguration,            // null | ToolboxDefinition;
   initial,                         // null | string | object;
-  platform,                        // null | string; (default 'web')
+  platform,                        // null | string; (default 'ios')
   onError,                         // null | (error: any) => void;
   onInject,                        // null | (state: BlocklyStateType) => void;
   onDispose,                       // null | (state: BlocklyStateType) => void;
