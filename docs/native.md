@@ -20,14 +20,19 @@ expo install @react-blockly/native
 
 ## Usage
 
+[BlocklyOptions interface](https://developers.google.com/blockly/reference/js/blockly.blocklyoptions_interface)
+
 ```js
 import { BlocklyEditor } from '@react-blockly/native';
 
 // ...
 
 <BlocklyEditor
-  workspaceConfiguration={workspaceConfiguration} // Blockly.BlocklyOptions;
-  toolboxConfiguration={toolboxConfiguration}     // ToolboxDefinition;
-  initial={initial}                               // null | string | object;
+  workspaceConfiguration={workspaceConfiguration}  // null | Blockly.BlocklyOptions;
+  initial={initial}                                // null | string | object;
+  onError={onError}                                // null | (error: any) => void;
+  onInject={onInject}                              // null | (state: BlocklyStateType) => void;
+  onDispose={onDispose}                            // null | (state: BlocklyStateType) => void;
+  onChange={onChange}                              // null | (state: BlocklyStateType) => void;
 />
 ```

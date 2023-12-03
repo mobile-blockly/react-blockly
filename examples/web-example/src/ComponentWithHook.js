@@ -12,12 +12,12 @@ function ComponentWithHook() {
       colour: '#ccc',
       snap: true,
     },
+    toolbox: ConfigFiles.INITIAL_TOOLBOX_JSON,
   };
 
   const { editorRef } = useBlocklyEditor({
     workspaceConfiguration,
-    toolboxConfiguration: ConfigFiles.INITIAL_TOOLBOX_JSON,
-    initial: ConfigFiles.INITIAL_XML,
+    initial: ConfigFiles.INITIAL_JSON,
   });
 
   return <div className="editor" ref={editorRef}></div>;
