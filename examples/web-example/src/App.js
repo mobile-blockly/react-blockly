@@ -12,14 +12,14 @@ function App() {
       colour: '#ccc',
       snap: true,
     },
+    toolbox: ConfigFiles.INITIAL_TOOLBOX_JSON,
   };
 
   return (
     <BlocklyEditor
       className={'editor'}
       workspaceConfiguration={workspaceConfiguration}
-      toolboxConfiguration={ConfigFiles.INITIAL_TOOLBOX_JSON}
-      initial={ConfigFiles.INITIAL_XML}
+      initial={ConfigFiles.INITIAL_JSON}
     />
   );
 }
