@@ -37,22 +37,19 @@ window.onload = () => {
     let json = {};
     let readOnly = false;
 
-
-    function init({workspaceConfiguration, toolboxConfiguration, initial}) {
+    function init({workspaceConfiguration, initial}) {
       const element = document.querySelector('#blocklyEditor');
-      if (!Blockly || !element || toolboxConfig || !workspaceConfiguration || !toolboxConfiguration) {
+      if (!Blockly || !element || toolboxConfig) {
         return;
       }
 
-      const worksp = Blockly.inject(element, {
-        ...workspaceConfiguration,
-        toolbox: toolboxConfiguration,
-      });
+      const worksp = Blockly.inject(element, workspaceConfiguration);
 
       if (worksp) {
         workspace = worksp;
-        toolboxConfig = toolboxConfiguration;
-        readOnly = !!workspaceConfiguration.readOnly;
+        toolboxConfig = workspaceConfiguration?.toolbox || {};
+        readOnly = !!workspaceConfiguration?.readOnly;
+        onCallback('toolboxConfig', toolboxConfig);
         onCallback('onInject', {xml, json});
         _setState(initial);
         workspace.addChangeListener(listener);
@@ -150,7 +147,6 @@ window.onload = () => {
   }
 
   document.addEventListener("message", handleEvent);
-
 
   ${script}
 }

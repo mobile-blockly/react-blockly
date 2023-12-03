@@ -10,7 +10,6 @@ import {
 
 export interface UseBlocklyEditorType {
   workspaceConfiguration?: Blockly.BlocklyOptions;
-  toolboxConfiguration?: ToolboxDefinition;
   platform?: string;
   initial?: string | object;
   onError?: (error: any) => void;
@@ -57,7 +56,6 @@ export interface HtmlRenderType {
 }
 
 export interface BlocklyInitType {
-  workspaceConfiguration: Blockly.BlocklyOptions;
-  toolboxConfiguration: ToolboxDefinition;
+  workspaceConfiguration?: Blockly.BlocklyOptions;
   initial?: string | object;
 }

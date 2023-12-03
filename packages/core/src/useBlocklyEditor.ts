@@ -15,7 +15,6 @@ import type {
 
 const useBlocklyEditor = ({
   workspaceConfiguration,
-  toolboxConfiguration,
   initial,
   onError,
   onInject,
@@ -33,8 +32,8 @@ const useBlocklyEditor = ({
   const readOnly = useRef<boolean>(false);
 
   useEffect(() => {
-    if (workspaceConfiguration && toolboxConfiguration) {
-      init({ workspaceConfiguration, toolboxConfiguration, initial });
+    if (workspaceConfiguration) {
+      init({ workspaceConfiguration, initial });
     }
 
     return () => {
@@ -50,30 +49,18 @@ const useBlocklyEditor = ({
     };
   }, []);
 
-  function init({
-    workspaceConfiguration,
-    toolboxConfiguration,
-    initial,
-  }: BlocklyInitType) {
-    if (
-      !editorRef.current ||
-      toolboxConfigRef.current ||
-      platform !== 'web' ||
-      !workspaceConfiguration ||
-      !toolboxConfiguration
-    ) {
+  function init({ workspaceConfiguration, initial }: BlocklyInitType) {
+    if (!editorRef.current || toolboxConfigRef.current || platform !== 'web') {
       return;
     }
 
-    const workspace = Blockly.inject(editorRef.current, {
-      ...workspaceConfiguration,
-      toolbox: toolboxConfiguration,
-    });
+    const workspace = Blockly.inject(editorRef.current, workspaceConfiguration);
 
     if (workspace) {
       workspaceRef.current = workspace;
-      toolboxConfigRef.current = toolboxConfiguration;
-      readOnly.current = !!workspaceConfiguration.readOnly;
+      toolboxConfigRef.current = (workspaceConfiguration?.toolbox ||
+        {}) as ToolboxDefinition;
+      readOnly.current = !!workspaceConfiguration?.readOnly;
       _onCallback(onInject, {
         workspace,
         xml: xmlRef.current,

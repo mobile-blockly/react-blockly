@@ -17,7 +17,6 @@ import type {
 
 const useBlocklyNativeEditor = ({
   workspaceConfiguration,
-  toolboxConfiguration,
   initial,
   onError,
   onInject,
@@ -44,33 +43,20 @@ const useBlocklyNativeEditor = ({
     };
   }, []);
 
-  function init({
-    workspaceConfiguration,
-    toolboxConfiguration,
-    initial,
-  }: BlocklyInitType) {
-    if (
-      !editorRef.current ||
-      toolboxConfigRef.current ||
-      platform === 'web' ||
-      !workspaceConfiguration ||
-      !toolboxConfiguration
-    ) {
+  function init({ workspaceConfiguration, initial }: BlocklyInitType) {
+    if (!editorRef.current || toolboxConfigRef.current || platform === 'web') {
       return;
     }
 
-    readOnly.current = !!workspaceConfiguration.readOnly;
+    readOnly.current = !!workspaceConfiguration?.readOnly;
     postData('init', {
       workspaceConfiguration,
-      toolboxConfiguration,
       initial,
     });
   }
 
   function onLoadEnd() {
-    if (workspaceConfiguration && toolboxConfiguration) {
-      init({ workspaceConfiguration, toolboxConfiguration, initial });
-    }
+    init({ workspaceConfiguration, initial });
   }
 
   function postData(event: string, data?: any) {
@@ -105,7 +91,7 @@ const useBlocklyNativeEditor = ({
           _onCallback(onError, data);
           break;
         case 'toolboxConfig':
-          toolboxConfigRef.current = data;
+          toolboxConfigRef.current = data as ToolboxDefinition;
           break;
       }
     } catch (err) {
