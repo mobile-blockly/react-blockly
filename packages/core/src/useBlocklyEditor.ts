@@ -58,8 +58,9 @@ const useBlocklyEditor = ({
 
     if (workspace) {
       workspaceRef.current = workspace;
-      toolboxConfigRef.current = (workspaceConfiguration?.toolbox ||
-        {}) as ToolboxDefinition;
+      toolboxConfigRef.current = (workspaceConfiguration?.toolbox || {
+        contents: [],
+      }) as ToolboxDefinition;
       readOnly.current = !!workspaceConfiguration?.readOnly;
       _onCallback(onInject, {
         workspace,
