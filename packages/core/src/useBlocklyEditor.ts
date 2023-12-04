@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 import Blockly, { WorkspaceSvg } from 'blockly';
 import type { ToolboxDefinition } from 'blockly/core/utils/toolbox';
@@ -24,96 +24,57 @@ const useBlocklyEditor = ({
 }: UseBlocklyEditorType): BlocklyInfoType => {
   const editorRef = useRef<any>(null);
   const workspaceRef = useRef<WorkspaceSvg | null>(null);
-  const xmlRef = useRef<string>(
-    '<xml xmlns="https://developers.google.com/blockly/xml"></xml>',
-  );
-  const jsonRef = useRef<object>({});
+  const stateRef = useRef<BlocklyStateType>(BlocklyState());
   const toolboxConfigRef = useRef<ToolboxDefinition | null>(null);
-  const readOnly = useRef<boolean>(false);
+  const readOnlyRef = useRef<boolean>(false);
 
-  useEffect(() => {
-    if (workspaceConfiguration) {
-      init({ workspaceConfiguration, initial });
-    }
-
-    return () => {
-      if (workspaceRef.current) {
-        workspaceRef.current.removeChangeListener(listener);
-        workspaceRef.current.dispose();
-        _onCallback(onDispose, {
-          workspace: workspaceRef.current,
-          xml: xmlRef.current,
-          json: jsonRef.current,
-        });
-      }
-    };
-  }, []);
-
-  function init({ workspaceConfiguration, initial }: BlocklyInitType) {
+  function init(params?: BlocklyInitType) {
     if (!editorRef.current || toolboxConfigRef.current || platform !== 'web') {
       return;
     }
 
-    const workspace = Blockly.inject(editorRef.current, workspaceConfiguration);
+    const workspace = Blockly.inject(
+      editorRef.current,
+      params?.workspaceConfiguration || workspaceConfiguration,
+    );
 
     if (workspace) {
       workspaceRef.current = workspace;
-      toolboxConfigRef.current = (workspaceConfiguration?.toolbox || {
-        contents: [],
-      }) as ToolboxDefinition;
-      readOnly.current = !!workspaceConfiguration?.readOnly;
+      toolboxConfigRef.current = (params?.workspaceConfiguration?.toolbox ||
+        workspaceConfiguration?.toolbox || {
+          contents: [],
+        }) as ToolboxDefinition;
+      readOnlyRef.current = !!(
+        params?.workspaceConfiguration?.readOnly ||
+        workspaceConfiguration?.readOnly
+      );
       _onCallback(onInject, {
         workspace,
-        xml: xmlRef.current,
-        json: jsonRef.current,
+        ...stateRef.current,
       });
-      _setState(initial);
+      _setState(params?.initial || initial);
       workspace.addChangeListener(listener);
+    }
+  }
+
+  function dispose() {
+    if (workspaceRef.current) {
+      workspaceRef.current.removeChangeListener(listener);
+      workspaceRef.current.dispose();
+      _onCallback(onDispose, {
+        workspace: workspaceRef.current,
+        ...stateRef.current,
+      });
+      workspaceRef.current = null;
+      toolboxConfigRef.current = null;
+      stateRef.current = BlocklyState();
+      readOnlyRef.current = false;
     }
   }
 
   function listener(event: Blockly.Events.Abstract) {
     if (!event.isUiEvent && workspaceRef.current) {
-      _saveData(workspaceRef.current);
-    }
-  }
-
-  function _onCallback(cb?: (arg?: any) => void, arg?: any) {
-    if (cb) {
-      cb(arg);
-    }
-  }
-
-  function _saveData(workspace: WorkspaceSvg): boolean {
-    try {
-      const newXml = Blockly.Xml.domToText(
-        Blockly.Xml.workspaceToDom(workspace),
-      );
-      if (newXml !== xmlRef.current) {
-        xmlRef.current = newXml;
-        jsonRef.current = Blockly.serialization.workspaces.save(workspace);
-        _onCallback(onChange, {
-          workspace,
-          xml: xmlRef.current,
-          json: jsonRef.current,
-        });
-        return true;
-      }
-      return false;
-    } catch (err) {
-      _onCallback(onError, err);
-      return false;
-    }
-  }
-
-  function _setState(newState?: string | object) {
-    if (newState && workspaceRef.current) {
-      if (typeof newState === 'string') {
-        importFromXml(newState as string, workspaceRef.current, onError);
-      } else if (typeof newState === 'object') {
-        importFromJson(newState as object, workspaceRef.current, onError);
-      }
-      _saveData(workspaceRef.current);
+      _saveData();
     }
   }
 
@@ -123,7 +84,7 @@ const useBlocklyEditor = ({
     try {
       if (cb && toolboxConfigRef.current) {
         const configuration: ToolboxDefinition = cb(toolboxConfigRef.current);
-        if (configuration && workspaceRef.current && !readOnly.current) {
+        if (configuration && workspaceRef.current && !readOnlyRef.current) {
           toolboxConfigRef.current = configuration;
           workspaceRef.current.updateToolbox(configuration);
         }
@@ -136,10 +97,7 @@ const useBlocklyEditor = ({
   function updateState(cb: (state: BlocklyStateType) => BlocklyNewStateType) {
     try {
       if (cb) {
-        const newState: BlocklyNewStateType = cb({
-          xml: xmlRef.current,
-          json: jsonRef.current,
-        });
+        const newState: BlocklyNewStateType = cb(stateRef.current);
         _setState(newState);
       }
     } catch (err) {
@@ -148,15 +106,64 @@ const useBlocklyEditor = ({
   }
 
   function state(): BlocklyStateType {
+    return stateRef.current;
+  }
+
+  function BlocklyState(state?: BlocklyStateType): BlocklyStateType {
     return {
-      xml: xmlRef.current,
-      json: jsonRef.current,
-    };
+      xml:
+        state?.xml ||
+        '<xml xmlns="https://developers.google.com/blockly/xml"></xml>',
+      json: state?.json || {},
+    } as BlocklyStateType;
+  }
+
+  function _setState(newState?: string | object) {
+    if (workspaceRef.current) {
+      if (typeof newState === 'string') {
+        importFromXml(newState as string, workspaceRef.current, onError);
+      } else if (typeof newState === 'object') {
+        importFromJson(newState as object, workspaceRef.current, onError);
+      }
+      _saveData();
+    }
+  }
+
+  function _saveData(): boolean {
+    try {
+      if (workspaceRef.current) {
+        const newXml = Blockly.Xml.domToText(
+          Blockly.Xml.workspaceToDom(workspaceRef.current),
+        );
+        if (newXml !== stateRef.current.xml) {
+          stateRef.current = BlocklyState({
+            xml: newXml,
+            json: Blockly.serialization.workspaces.save(workspaceRef.current),
+          });
+          _onCallback(onChange, {
+            workspace: workspaceRef.current,
+            ...stateRef.current,
+          });
+          return true;
+        }
+      }
+      return false;
+    } catch (err) {
+      _onCallback(onError, err);
+      return false;
+    }
+  }
+
+  function _onCallback(cb?: (arg?: any) => void, arg?: any) {
+    if (cb) {
+      cb(arg);
+    }
   }
 
   return {
     editorRef,
     init,
+    dispose,
     state,
     updateToolboxConfig,
     updateState,

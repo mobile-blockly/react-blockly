@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 import type { ToolboxDefinition } from 'blockly/core/utils/toolbox';
 import { type WebViewMessageEvent } from 'react-native-webview';
@@ -25,48 +25,33 @@ const useBlocklyNativeEditor = ({
   platform = 'ios',
 }: UseBlocklyNativeEditorType): BlocklyNativeInfoType => {
   const editorRef = useRef<any>(null);
-  const xmlRef = useRef<string>(
-    '<xml xmlns="https://developers.google.com/blockly/xml"></xml>',
-  );
-  const jsonRef = useRef<object>({});
+  const stateRef = useRef<BlocklyStateType>(BlocklyState());
   const toolboxConfigRef = useRef<ToolboxDefinition | null>(null);
-  const readOnly = useRef<boolean>(false);
+  const readOnlyRef = useRef<boolean>(false);
 
-  useEffect(() => {
-    return () => {
-      if (toolboxConfigRef.current) {
-        _onCallback(onDispose, {
-          xml: xmlRef.current,
-          json: jsonRef.current,
-        });
-      }
-    };
-  }, []);
-
-  function init({ workspaceConfiguration, initial }: BlocklyInitType) {
+  function init(params?: BlocklyInitType) {
     if (!editorRef.current || toolboxConfigRef.current || platform === 'web') {
       return;
     }
 
-    readOnly.current = !!workspaceConfiguration?.readOnly;
-    postData('init', {
-      workspaceConfiguration,
-      initial,
+    readOnlyRef.current = !!(
+      params?.workspaceConfiguration?.readOnly ||
+      workspaceConfiguration?.readOnly
+    );
+    _postData('init', {
+      workspaceConfiguration:
+        params?.workspaceConfiguration || workspaceConfiguration,
+      initial: params?.initial || initial,
     });
   }
 
-  function onLoadEnd() {
-    init({ workspaceConfiguration, initial });
-  }
-
-  function postData(event: string, data?: any) {
-    try {
-      if (editorRef.current && event) {
-        const dataString = JSON.stringify({ event, data });
-        editorRef.current.postMessage(dataString);
-      }
-    } catch (err) {
-      _onCallback(onError, err);
+  function dispose() {
+    if (toolboxConfigRef.current) {
+      _postData('dispose');
+      _onCallback(onDispose, stateRef.current);
+      stateRef.current = BlocklyState();
+      toolboxConfigRef.current = null;
+      readOnlyRef.current = false;
     }
   }
 
@@ -75,17 +60,12 @@ const useBlocklyNativeEditor = ({
       const { event, data } = JSON.parse(e.nativeEvent.data);
       switch (event) {
         case 'onInject':
-          xmlRef.current = data.xml;
-          jsonRef.current = data.json;
-          _onCallback(onInject, data);
+          stateRef.current = BlocklyState(data);
+          _onCallback(onInject, stateRef.current);
           break;
         case 'onChange':
-          xmlRef.current = data.xml;
-          jsonRef.current = data.json;
-          _onCallback(onChange, data);
-          break;
-        case 'onDispose':
-          _onCallback(onDispose, data);
+          stateRef.current = BlocklyState(data);
+          _onCallback(onChange, stateRef.current);
           break;
         case 'onError':
           _onCallback(onError, data);
@@ -99,31 +79,14 @@ const useBlocklyNativeEditor = ({
     }
   }
 
-  function _editorRender(params: HtmlRenderType = {}) {
-    const { style, script } = params;
-
-    return platform === 'web'
-      ? ''
-      : htmlRender({
-          style: htmlStyle(style),
-          script: htmlScript(script),
-        });
-  }
-
-  function _onCallback(cb?: (arg?: any) => void, arg?: any) {
-    if (cb) {
-      cb(arg);
-    }
-  }
-
   function updateToolboxConfig(
     cb: (configuration: ToolboxDefinition) => ToolboxDefinition,
   ) {
     try {
       if (cb && toolboxConfigRef.current) {
         const configuration: ToolboxDefinition = cb(toolboxConfigRef.current);
-        if (configuration && !readOnly.current) {
-          postData('updateToolboxConfig', configuration);
+        if (configuration && !readOnlyRef.current) {
+          _postData('updateToolboxConfig', configuration);
         }
       }
     } catch (err) {
@@ -134,11 +97,8 @@ const useBlocklyNativeEditor = ({
   function updateState(cb: (state: BlocklyStateType) => BlocklyNewStateType) {
     try {
       if (cb) {
-        const newState: BlocklyNewStateType = cb({
-          xml: xmlRef.current,
-          json: jsonRef.current,
-        });
-        postData('updateState', newState);
+        const newState: BlocklyNewStateType = cb(stateRef.current);
+        _postData('updateState', newState);
       }
     } catch (err) {
       _onCallback(onError, err);
@@ -146,19 +106,53 @@ const useBlocklyNativeEditor = ({
   }
 
   function state(): BlocklyStateType {
+    return stateRef.current;
+  }
+
+  function BlocklyState(state?: BlocklyStateType): BlocklyStateType {
     return {
-      xml: xmlRef.current,
-      json: jsonRef.current,
-    };
+      xml:
+        state?.xml ||
+        '<xml xmlns="https://developers.google.com/blockly/xml"></xml>',
+      json: state?.json || {},
+    } as BlocklyStateType;
+  }
+
+  function editorRender(params: HtmlRenderType = {}) {
+    const { style, script } = params;
+
+    return platform === 'web'
+      ? ''
+      : htmlRender({
+          style: htmlStyle(style),
+          script: htmlScript(script),
+        });
+  }
+
+  function _postData(event: string, data?: any) {
+    try {
+      if (editorRef.current && event) {
+        const dataString = JSON.stringify({ event, data });
+        editorRef.current.postMessage(dataString);
+      }
+    } catch (err) {
+      _onCallback(onError, err);
+    }
+  }
+
+  function _onCallback(cb?: (arg?: any) => void, arg?: any) {
+    if (cb) {
+      cb(arg);
+    }
   }
 
   return {
     editorRef,
     init,
+    dispose,
     state,
     onMessage,
-    onLoadEnd,
-    htmlRender: _editorRender,
+    htmlRender: editorRender,
     updateToolboxConfig,
     updateState,
   };

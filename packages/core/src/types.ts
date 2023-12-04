@@ -3,10 +3,6 @@ import { type MutableRefObject } from 'react';
 import Blockly, { WorkspaceSvg } from 'blockly';
 import { type ToolboxDefinition } from 'blockly/core/utils/toolbox';
 import { type WebViewMessageEvent } from 'react-native-webview';
-import {
-  type WebViewErrorEvent,
-  type WebViewNavigationEvent,
-} from 'react-native-webview/lib/WebViewTypes';
 
 export interface UseBlocklyEditorType {
   workspaceConfiguration?: Blockly.BlocklyOptions;
@@ -25,7 +21,8 @@ export interface UseBlocklyNativeEditorType extends UseBlocklyEditorType {
 
 export interface BlocklyInfoType {
   editorRef: MutableRefObject<any>;
-  init: (params: BlocklyInitType) => void;
+  init: (params?: BlocklyInitType) => void;
+  dispose: () => void;
   state: () => BlocklyStateType;
   updateToolboxConfig: (
     cb: (configuration: ToolboxDefinition) => ToolboxDefinition,
@@ -35,7 +32,6 @@ export interface BlocklyInfoType {
 
 export interface BlocklyNativeInfoType extends BlocklyInfoType {
   onMessage: (e: WebViewMessageEvent) => void;
-  onLoadEnd: (e: WebViewNavigationEvent | WebViewErrorEvent) => void;
   htmlRender: (params?: HtmlRenderType) => string;
 }
 
@@ -45,7 +41,7 @@ export interface BlocklyStateType {
 }
 
 export interface BlocklyCbStateType extends BlocklyStateType {
-  workspace: WorkspaceSvg | null;
+  workspace?: WorkspaceSvg;
 }
 
 export type BlocklyNewStateType = object;
