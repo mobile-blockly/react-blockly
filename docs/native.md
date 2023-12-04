@@ -28,6 +28,7 @@ import { BlocklyEditor } from '@react-blockly/native';
 // ...
 
 <BlocklyEditor
+  style={{backgroundColor: '#fff'}}                // null | object | Array<object>
   workspaceConfiguration={workspaceConfiguration}  // null | Blockly.BlocklyOptions;
   initial={initial}                                // null | string | object;
   onError={onError}                                // null | (error: any) => void;
