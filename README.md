@@ -7,6 +7,12 @@ A React Blockly visual programming editor.
 <br/>
 Originally inspired by [react-blockly](https://github.com/nbudin/react-blockly)
 
+<details><summary>Click to see the screenshot</summary>
+
+![React Blockly editor](https://github-production-user-asset-6210df.s3.amazonaws.com/26460350/283968394-fdf46ed0-276b-4171-86fb-94f5d69940e4.png)
+
+</details>
+
 ## Package Versions
 
 | Name                                      |                                                        Latest Version                                                         |
