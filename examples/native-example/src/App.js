@@ -1,9 +1,10 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useCallback } from 'react';
+import { Platform, StyleSheet } from 'react-native';
 
 import { BlocklyEditor } from '@react-blockly/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { ComponentWithHook } from './ComponentWithHook';
 import ConfigFiles from './content';
 
 export function App() {
@@ -17,12 +18,45 @@ export function App() {
     toolbox: ConfigFiles.INITIAL_TOOLBOX_JSON,
   };
 
+  const onInject = useCallback(({ xml, json }) => {
+    console.log('onInject', xml, JSON.stringify(json));
+  }, []);
+
+  const onChange = useCallback(({ xml, json }) => {
+    console.log('onChange', xml, JSON.stringify(json));
+  }, []);
+
+  const onDispose = useCallback(({ xml, json }) => {
+    console.log('onDispose', xml, JSON.stringify(json));
+  }, []);
+
+  const onError = useCallback(error => {
+    console.log('onError', error?.toString());
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
-      <BlocklyEditor
-        workspaceConfiguration={workspaceConfiguration}
-        initial={ConfigFiles.INITIAL_JSON}
-      />
+      {Platform.OS === 'web' ? (
+        // android, ios and web editor
+        <BlocklyEditor
+          style={{ background: '#fff' }}
+          workspaceConfiguration={workspaceConfiguration}
+          initial={ConfigFiles.INITIAL_XML}
+          onInject={onInject}
+          onChange={onChange}
+          onDispose={onDispose}
+          onError={onError}
+        />
+      ) : (
+        // only android and ios editor
+        <ComponentWithHook
+          workspaceConfiguration={workspaceConfiguration}
+          onInject={onInject}
+          onChange={onChange}
+          onDispose={onDispose}
+          onError={onError}
+        />
+      )}
     </SafeAreaView>
   );
 }
