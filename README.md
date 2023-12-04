@@ -15,6 +15,14 @@ Originally inspired by [react-blockly](https://github.com/nbudin/react-blockly)
 | [@react-blockly/web](/packages/web)       |    [![npm version](https://img.shields.io/npm/v/@react-blockly/web.svg)](https://www.npmjs.com/package/@react-blockly/web)    |
 | [@react-blockly/native](/packages/native) | [![npm version](https://img.shields.io/npm/v/@react-blockly/native.svg)](https://www.npmjs.com/package/@react-blockly/native) |
 
+## `yarn web start`
+
+[@react-blockly/web-example](https://github.com/SerSerch/react-blockly/blob/main/examples/web-example)
+
+## `yarn native start`
+
+[@react-blockly/native-example](https://github.com/SerSerch/react-blockly/blob/main/examples/native-example)
+
 ## License
 
 [MIT](LICENSE)

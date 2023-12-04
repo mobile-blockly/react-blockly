@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.4.0](https://github.com/SerSerch/react-blockly/compare/@react-blockly/core@1.3.0...@react-blockly/core@1.4.0) (2023-12-04)
+
+### Bug Fixes
+
+* fix `init`
+
+### Features
+
+* add method `dispose`
+
+```js
+const {
+  editorRef,
+  init,
+  dispose,
+} = useBlocklyEditor({
+  // it is not required
+  workspaceConfiguration,
+  initial,
+});
+
+useEffect(() => {
+  init({
+    // if you need to override
+    workspaceConfiguration: newWorkspaceConfig,
+    initial: newInitial,
+  });
+
+  return () => {
+    dispose();
+  };
+}, []);
+```
+
+### BREAKING CHANGES
+
+* remove `onLoadEnd` from `useBlocklyNativeEditor`
+* remove `auto init` from `useBlocklyEditor` and `useBlocklyNativeEditor`
+
 # [1.3.0](https://github.com/SerSerch/react-blockly/compare/@react-blockly/core@1.2.0...@react-blockly/core@1.3.0) (2023-12-03)
 
 ### Bug Fixes
@@ -18,7 +57,7 @@ All notable changes to this project will be documented in this file.
 const workspaceConfiguration = {
   // ...
   toolbox: toolboxConfiguration,
-}
+};
 
 const {
   editorRef,

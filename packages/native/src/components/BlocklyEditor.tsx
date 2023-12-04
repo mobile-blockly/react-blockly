@@ -1,4 +1,4 @@
-import React, { memo, type PropsWithChildren } from 'react';
+import React, { memo, type PropsWithChildren, useEffect } from 'react';
 import { Platform, View } from 'react-native';
 
 import { useBlocklyEditor, useBlocklyNativeEditor } from '@react-blockly/core';
@@ -7,31 +7,39 @@ import { WebView } from 'react-native-webview';
 import type { BlocklyEditorType } from '../types';
 
 function EditorComponent(props: BlocklyEditorType) {
-  const { editorRef: editorWebRef } = useBlocklyEditor({
+  const webEditor = useBlocklyEditor({
     ...props,
     platform: Platform.OS,
   });
-  const {
-    editorRef: editorNativeRef,
-    onMessage,
-    onLoadEnd,
-    htmlRender,
-  } = useBlocklyNativeEditor({
+  const nativeEditor = useBlocklyNativeEditor({
     ...props,
     platform: Platform.OS,
   });
 
+  useEffect(() => {
+    webEditor.init();
+
+    return () => {
+      webEditor.dispose();
+      nativeEditor.dispose();
+    };
+  }, []);
+
+  function onLoadEnd() {
+    nativeEditor.init();
+  }
+
   return Platform.OS === 'web' ? (
-    <View style={[{ flex: 1 }, props.style]} ref={editorWebRef} />
+    <View style={[{ flex: 1 }, props.style]} ref={webEditor.editorRef} />
   ) : (
     <WebView
       style={[{ flex: 1 }, props.style]}
-      ref={editorNativeRef}
+      ref={nativeEditor.editorRef}
       originWhitelist={['*']}
       source={{
-        html: htmlRender(),
+        html: nativeEditor.htmlRender(),
       }}
-      onMessage={onMessage}
+      onMessage={nativeEditor.onMessage}
       onLoadEnd={onLoadEnd}
     />
   );

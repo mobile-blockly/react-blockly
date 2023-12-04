@@ -1,4 +1,4 @@
-import React, { memo, type PropsWithChildren } from 'react';
+import React, { memo, type PropsWithChildren, useEffect } from 'react';
 
 import { useBlocklyEditor } from '@react-blockly/core';
 
@@ -6,7 +6,15 @@ import type { BlocklyWebEditorType } from '../types';
 
 function EditorComponent(props: BlocklyWebEditorType) {
   const { className } = props;
-  const { editorRef } = useBlocklyEditor(props);
+  const { editorRef, init, dispose } = useBlocklyEditor(props);
+
+  useEffect(() => {
+    init();
+
+    return () => {
+      dispose();
+    };
+  }, []);
 
   return <div className={className} ref={editorRef}></div>;
 }
@@ -15,10 +23,7 @@ function propsAreEqual(
   prevProps: Readonly<PropsWithChildren<BlocklyWebEditorType>>,
   nextProps: Readonly<PropsWithChildren<BlocklyWebEditorType>>,
 ) {
-  return (
-    prevProps.className === nextProps.className &&
-    prevProps.forceData === nextProps.forceData
-  );
+  return prevProps.forceData === nextProps.forceData;
 }
 
 export const BlocklyEditor = memo(

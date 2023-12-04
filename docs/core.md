@@ -33,7 +33,8 @@ const myEditor = useBlocklyEditor( // type UseBlocklyEditorType;
 
 const {
   editorRef,                       // MutableRefObject<any>;
-  init,                            // (params: BlocklyInitType) => void;
+  init,                            // (params?: BlocklyInitType) => void;
+  dispose,                         // () => void;
   state,                           // () => BlocklyStateType;
   updateState,                    /** (cb: (
                                    *    state: BlocklyStateType
@@ -44,6 +45,14 @@ const {
                                    *  ) => ToolboxDefinition) => void;
                                    */
 } = myEditor;
+
+useEffect(() => {
+  init();
+
+  return () => {
+    dispose();
+  };
+}, []);
 
 // render web component
 <div className={'my-class'} ref={editorRef}></div>
@@ -75,11 +84,11 @@ const myEditor = useBlocklyNativeEditor( // type UseBlocklyNativeEditorType;
 
 const {
   editorRef,                       // MutableRefObject<any>;
-  init,                            // (params: BlocklyInitType) => void;
+  init,                            // (params?: BlocklyInitType) => void;
+  dispose,                         // () => void;
   state,                           // () => BlocklyStateType;
   htmlRender,                      // (params?: HtmlRenderType) => string;
   onMessage,                       // (e: WebViewMessageEvent) => void;
-  onLoadEnd,                       // (e: WebViewNavigationEvent | WebViewErrorEvent) => void;
   updateState,                    /** (cb: (
                                    *    state: BlocklyStateType
                                    *  ) => object) => void;
@@ -90,6 +99,12 @@ const {
                                    */
 } = myEditor;
 
+useEffect(() => {
+  return () => {
+    dispose();
+  };
+}, []);
+
 // render only for native WebView component
 <WebView
   style={{ flex: 1 }}
@@ -99,6 +114,6 @@ const {
     html: htmlRender(),
   }}
   onMessage={onMessage}
-  onLoadEnd={onLoadEnd}
+  onLoadEnd={() => init()}
 />
 ```
