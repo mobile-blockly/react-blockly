@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { BlocklyEditor } from '@react-blockly/web';
 
+import { ComponentWithHook } from './ComponentWithHook';
 import ConfigFiles from './content';
 
 function App() {
@@ -15,12 +16,45 @@ function App() {
     toolbox: ConfigFiles.INITIAL_TOOLBOX_JSON,
   };
 
+  const onInject = useCallback(({ workspace, xml, json }) => {
+    console.log('onInject', workspace, xml, json);
+  }, []);
+
+  const onChange = useCallback(({ xml, json }) => {
+    console.log('onChange', xml, json);
+  }, []);
+
+  const onDispose = useCallback(({ workspace, xml, json }) => {
+    console.log('onDispose', workspace, xml, json);
+  }, []);
+
+  const onError = useCallback(error => {
+    console.log('onError', error);
+  }, []);
+
   return (
-    <BlocklyEditor
-      className={'editor'}
-      workspaceConfiguration={workspaceConfiguration}
-      initial={ConfigFiles.INITIAL_JSON}
-    />
+    <div style={{ display: 'flex', flexGrow: 1, flexDirection: 'row' }}>
+      <div style={{ flexGrow: 1 }}>
+        <BlocklyEditor
+          className={'editor'}
+          workspaceConfiguration={workspaceConfiguration}
+          initial={ConfigFiles.INITIAL_XML}
+          onInject={onInject}
+          onChange={onChange}
+          onDispose={onDispose}
+          onError={onError}
+        />
+      </div>
+      <div style={{ flexGrow: 1 }}>
+        <ComponentWithHook
+          workspaceConfiguration={workspaceConfiguration}
+          onInject={onInject}
+          onChange={onChange}
+          onDispose={onDispose}
+          onError={onError}
+        />
+      </div>
+    </div>
   );
 }
 
