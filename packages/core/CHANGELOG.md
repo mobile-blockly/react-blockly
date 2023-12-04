@@ -12,6 +12,8 @@ All notable changes to this project will be documented in this file.
 
 * add method `dispose`
 
+<details><summary>Click to see the code</summary>
+
 ```js
 const {
   editorRef,
@@ -36,6 +38,8 @@ useEffect(() => {
 }, []);
 ```
 
+</details>
+
 ### BREAKING CHANGES
 
 * remove `onLoadEnd` from `useBlocklyNativeEditor`
@@ -52,6 +56,8 @@ useEffect(() => {
 
 * `workspaceConfiguration` is not required for `init`
 * remove `toolboxConfiguration` from `useBlocklyEditor` and `useBlocklyNativeEditor`
+
+<details><summary>Click to see the code</summary>
 
 ```js
 const workspaceConfiguration = {
@@ -77,12 +83,16 @@ useEffect(() => {
 }, []);
 ```
 
+</details>
+
 # [1.2.0](https://github.com/SerSerch/react-blockly/compare/@react-blockly/core@1.1.0...@react-blockly/core@1.2.0) (2023-12-01)
 
 ### Features
 
 * `workspaceConfiguration, toolboxConfiguration` is not required for `useBlocklyEditor` and `useBlocklyNativeEditor`
 * add methods `init, state`
+
+<details><summary>Click to see the code</summary>
 
 ```js
 const {
@@ -105,6 +115,8 @@ useEffect(() => {
 }, []);
 ```
 
+</details>
+
 # [1.1.0](https://github.com/SerSerch/react-blockly/compare/@react-blockly/core@1.0.1...@react-blockly/core@1.1.0) (2023-11-21)
 
 ### Bug Fixes
@@ -118,6 +130,8 @@ useEffect(() => {
 * add htmlStyle
 * add htmlScript
 * add useBlocklyNativeEditor
+
+<details><summary>Click to see the code</summary>
 
 ```js
 const myEditor = useBlocklyNativeEditor({
@@ -141,6 +155,8 @@ const {
 } = myEditor;
 ```
 
+</details>
+
 ### BREAKING CHANGES
 * remove `workspace, xml, json` from `useBlocklyEditor`
 
@@ -151,6 +167,8 @@ const {
 * add importFromXml
 * add importFromJson
 * add useBlocklyEditor
+
+<details><summary>Click to see the code</summary>
 
 ```js
 const myEditor = useBlocklyEditor({
@@ -174,6 +192,8 @@ const {
   updateState,
 } = myEditor;
 ```
+
+</details>
 
 ### Code Refactoring
 
