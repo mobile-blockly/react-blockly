@@ -23,10 +23,7 @@ function propsAreEqual(
   prevProps: Readonly<PropsWithChildren<BlocklyWebEditorType>>,
   nextProps: Readonly<PropsWithChildren<BlocklyWebEditorType>>,
 ) {
-  return (
-    prevProps.className === nextProps.className &&
-    prevProps.forceData === nextProps.forceData
-  );
+  return prevProps.forceData === nextProps.forceData;
 }
 
 export const BlocklyEditor = memo(
