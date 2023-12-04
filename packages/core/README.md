@@ -10,6 +10,8 @@
 
 See [Installation Instructions](https://github.com/SerSerch/react-blockly/blob/main/docs/core.md).
 
+## [Change Log](https://github.com/SerSerch/react-blockly/blob/main/packages/core/CHANGELOG.md)
+
 ## Example
 
 [@react-blockly/web-example](https://github.com/SerSerch/react-blockly/blob/main/examples/web-example)\
