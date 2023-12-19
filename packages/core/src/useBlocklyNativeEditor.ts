@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import type { ToolboxDefinition } from 'blockly/core/utils/toolbox';
 import { type WebViewMessageEvent } from 'react-native-webview';
 
+import { htmlEditor } from './html/htmlEditor';
 import { htmlRender } from './html/htmlRender';
 import { htmlScript } from './html/htmlScript';
 import { htmlStyle } from './html/htmlStyle';
@@ -15,22 +16,30 @@ import type {
   UseBlocklyNativeEditorType,
 } from './types';
 
-const useBlocklyNativeEditor = ({
-  workspaceConfiguration,
-  initial,
-  onError,
-  onInject,
-  onChange,
-  onDispose,
-  platform = 'ios',
-}: UseBlocklyNativeEditorType): BlocklyNativeInfoType => {
+const useBlocklyNativeEditor = (
+  params?: null | UseBlocklyNativeEditorType,
+): BlocklyNativeInfoType => {
+  const {
+    workspaceConfiguration,
+    initial,
+    onError,
+    onInject,
+    onChange,
+    onDispose,
+    platform = 'ios',
+  } = params ?? {};
   const editorRef = useRef<any>(null);
   const stateRef = useRef<BlocklyStateType>(BlocklyState());
   const toolboxConfigRef = useRef<ToolboxDefinition | null>(null);
   const readOnlyRef = useRef<boolean>(false);
 
-  function init(params?: BlocklyInitType) {
-    if (!editorRef.current || toolboxConfigRef.current || platform === 'web') {
+  function init(params?: null | BlocklyInitType) {
+    if (
+      !editorRef.current ||
+      toolboxConfigRef.current ||
+      platform === 'web' ||
+      !platform
+    ) {
       return;
     }
 
@@ -118,14 +127,15 @@ const useBlocklyNativeEditor = ({
     } as BlocklyStateType;
   }
 
-  function editorRender(params: HtmlRenderType = {}) {
-    const { style, script } = params;
+  function editorRender(params?: null | HtmlRenderType) {
+    const { style, script, editor } = params ?? {};
 
     return platform === 'web'
       ? ''
       : htmlRender({
           style: htmlStyle(style),
           script: htmlScript(script),
+          editor: editor ?? htmlEditor(),
         });
   }
 

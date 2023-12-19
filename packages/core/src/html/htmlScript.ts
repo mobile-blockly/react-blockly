@@ -1,4 +1,4 @@
-export function htmlScript(script: string = ''): string {
+export function htmlScript(script?: null | string): string {
   return `
 <script>
 window.onload = () => {
@@ -29,6 +29,22 @@ window.onload = () => {
       return false;
     }
   };
+
+  function nullToUndefined(data) {
+    if (data === null) {
+      return;
+    } else if (Array.isArray(data)) {
+      return data.map(nullToUndefined);
+    } else if (typeof data === 'object') {
+      const tempObj = {};
+      Object.keys(data).forEach(key => {
+        tempObj[key] = nullToUndefined(data[key]);
+      });
+      return tempObj;
+    } else {
+      return data;
+    }
+  }
 
   const BlocklyEditor = () => {
     let _workspace = null;
@@ -158,7 +174,7 @@ window.onload = () => {
     try {
       const { event, data } = JSON.parse(message.data);
       if (editor[event]) {
-        editor[event](data);
+        editor[event](nullToUndefined(data));
       }
     } catch (err) {
       onCallback('onError', err?.toString());
@@ -167,7 +183,7 @@ window.onload = () => {
 
   document.addEventListener("message", handleEvent);
 
-  ${script}
+  ${script ?? ''}
 }
 </script>
 `;

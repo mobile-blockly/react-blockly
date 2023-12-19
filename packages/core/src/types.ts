@@ -5,9 +5,9 @@ import { type ToolboxDefinition } from 'blockly/core/utils/toolbox';
 import { type WebViewMessageEvent } from 'react-native-webview';
 
 export interface UseBlocklyEditorType {
-  workspaceConfiguration?: Blockly.BlocklyOptions;
-  platform?: string;
-  initial?: string | object;
+  workspaceConfiguration?: null | Blockly.BlocklyOptions;
+  platform?: null | string;
+  initial?: null | string | object;
   onError?: (error: any) => void;
   onInject?: (state: BlocklyCbStateType) => void;
   onDispose?: (state: BlocklyCbStateType) => void;
@@ -47,11 +47,17 @@ export interface BlocklyCbStateType extends BlocklyStateType {
 export type BlocklyNewStateType = object;
 
 export interface HtmlRenderType {
-  script?: string;
-  style?: string;
+  script?: null | string;
+  style?: null | string;
+  editor?: null | string;
+}
+
+export interface HtmlEditorType {
+  content?: null | string;
+  classList?: null | Array<string>;
 }
 
 export interface BlocklyInitType {
-  workspaceConfiguration?: Blockly.BlocklyOptions;
-  initial?: string | object;
+  workspaceConfiguration?: null | Blockly.BlocklyOptions;
+  initial?: null | string | object;
 }
