@@ -1,10 +1,5 @@
+export * from './helpers';
+export * from './html';
 export * from './types';
-export { importFromJson } from './helpers/importFromJson';
-export { importFromXml } from './helpers/importFromXml';
-export { nullToUndefined } from './helpers/nullToUndefined';
-export { htmlEditor } from './html/htmlEditor';
-export { htmlRender } from './html/htmlRender';
-export { htmlScript } from './html/htmlScript';
-export { htmlStyle } from './html/htmlStyle';
 export { useBlocklyEditor } from './useBlocklyEditor';
 export { useBlocklyNativeEditor } from './useBlocklyNativeEditor';
