@@ -1,4 +1,4 @@
-export function htmlStyle(style: string = ''): string {
+export function htmlStyle(style?: null | string): string {
   return `
 <style>
 html,
@@ -22,7 +22,7 @@ body {
   flex-direction: column;
   box-sizing: border-box;
 }
-${style}
+${style ?? ''}
 </style>
 `;
 }

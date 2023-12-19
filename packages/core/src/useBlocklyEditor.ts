@@ -3,8 +3,9 @@ import { useRef } from 'react';
 import Blockly, { WorkspaceSvg } from 'blockly';
 import type { ToolboxDefinition } from 'blockly/core/utils/toolbox';
 
-import { importFromJson } from './importFromJson';
-import { importFromXml } from './importFromXml';
+import { importFromJson } from './helpers/importFromJson';
+import { importFromXml } from './helpers/importFromXml';
+import { nullToUndefined } from './helpers/nullToUndefined';
 import type {
   BlocklyInfoType,
   BlocklyInitType,
@@ -13,29 +14,32 @@ import type {
   UseBlocklyEditorType,
 } from './types';
 
-const useBlocklyEditor = ({
-  workspaceConfiguration,
-  initial,
-  onError,
-  onInject,
-  onChange,
-  onDispose,
-  platform = 'web',
-}: UseBlocklyEditorType): BlocklyInfoType => {
+const useBlocklyEditor = (
+  params?: null | UseBlocklyEditorType,
+): BlocklyInfoType => {
+  const {
+    workspaceConfiguration,
+    initial,
+    onError,
+    onInject,
+    onChange,
+    onDispose,
+    platform = 'web',
+  } = params ?? {};
   const editorRef = useRef<any>(null);
   const workspaceRef = useRef<WorkspaceSvg | null>(null);
   const stateRef = useRef<BlocklyStateType>(BlocklyState());
   const toolboxConfigRef = useRef<ToolboxDefinition | null>(null);
   const readOnlyRef = useRef<boolean>(false);
 
-  function init(params?: BlocklyInitType) {
+  function init(params?: null | BlocklyInitType) {
     if (!editorRef.current || toolboxConfigRef.current || platform !== 'web') {
       return;
     }
 
     const workspace = Blockly.inject(
       editorRef.current,
-      params?.workspaceConfiguration || workspaceConfiguration,
+      nullToUndefined(params?.workspaceConfiguration ?? workspaceConfiguration),
     );
 
     if (workspace) {
@@ -118,11 +122,11 @@ const useBlocklyEditor = ({
     } as BlocklyStateType;
   }
 
-  function _setState(newState?: string | object) {
+  function _setState(newState?: null | string | object) {
     if (workspaceRef.current) {
       if (typeof newState === 'string') {
         importFromXml(newState as string, workspaceRef.current, onError);
-      } else if (typeof newState === 'object') {
+      } else if (newState && typeof newState === 'object') {
         importFromJson(newState as object, workspaceRef.current, onError);
       }
       _saveData();
