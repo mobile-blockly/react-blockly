@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.5.0](https://github.com/SerSerch/react-blockly/compare/@react-blockly/core@1.4.0...@react-blockly/core@1.5.0) (2023-12-19)
+
+### Features
+
+* add htmlEditor
+* add nullToUndefined - null safety
+
 # [1.4.0](https://github.com/SerSerch/react-blockly/compare/@react-blockly/core@1.3.0...@react-blockly/core@1.4.0) (2023-12-04)
 
 ### Bug Fixes
