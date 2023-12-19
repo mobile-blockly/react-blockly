@@ -30,16 +30,16 @@ window.onload = () => {
     }
   };
 
-  function nullToUndefined(data) {
-    if (data === null) {
-      return;
+  function nullToUndefined(data, defaultData) {
+    if (data === null || typeof data === 'undefined') {
+      return defaultData;
     } else if (Array.isArray(data)) {
-      return data.map(nullToUndefined);
+      return data.map(item => nullToUndefined(item, defaultData?.[0]));
     } else if (typeof data === 'object') {
       const tempObj = {};
-      Object.keys(data).forEach(key => {
-        tempObj[key] = nullToUndefined(data[key]);
-      });
+      for (let key in data) {
+        tempObj[key] = nullToUndefined(data[key], defaultData?.[key]);
+      }
       return tempObj;
     } else {
       return data;
