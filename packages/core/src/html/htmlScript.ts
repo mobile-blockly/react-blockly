@@ -58,7 +58,7 @@ window.onload = () => {
         return;
       }
 
-      const workspace = Blockly.inject(element, params?.workspaceConfiguration);
+      const workspace = Blockly.inject(element, nullToUndefined(params?.workspaceConfiguration));
 
       if (workspace) {
         _workspace = workspace;
@@ -174,7 +174,7 @@ window.onload = () => {
     try {
       const { event, data } = JSON.parse(message.data);
       if (editor[event]) {
-        editor[event](nullToUndefined(data));
+        editor[event](data);
       }
     } catch (err) {
       onCallback('onError', err?.toString());

@@ -3,8 +3,9 @@ import { useRef } from 'react';
 import Blockly, { WorkspaceSvg } from 'blockly';
 import type { ToolboxDefinition } from 'blockly/core/utils/toolbox';
 
-import { importFromJson } from './importFromJson';
-import { importFromXml } from './importFromXml';
+import { importFromJson } from './helpers/importFromJson';
+import { importFromXml } from './helpers/importFromXml';
+import { nullToUndefined } from './helpers/nullToUndefined';
 import type {
   BlocklyInfoType,
   BlocklyInitType,
@@ -38,7 +39,7 @@ const useBlocklyEditor = (
 
     const workspace = Blockly.inject(
       editorRef.current,
-      params?.workspaceConfiguration ?? workspaceConfiguration ?? undefined,
+      nullToUndefined(params?.workspaceConfiguration ?? workspaceConfiguration),
     );
 
     if (workspace) {
