@@ -33,7 +33,7 @@ const myEditor = useBlocklyEditor( // type UseBlocklyEditorType;
 
 const {
   editorRef,                       // MutableRefObject<any>;
-  init,                            // (params?: BlocklyInitType) => void;
+  init,                            // (params?: null | BlocklyInitType) => void;
   dispose,                         // () => void;
   state,                           // () => BlocklyStateType;
   updateState,                    /** (cb: (
@@ -84,7 +84,7 @@ const myEditor = useBlocklyNativeEditor( // type UseBlocklyNativeEditorType;
 
 const {
   editorRef,                       // MutableRefObject<any>;
-  init,                            // (params?: BlocklyInitType) => void;
+  init,                            // (params?: null | BlocklyInitType) => void;
   dispose,                         // () => void;
   state,                           // () => BlocklyStateType;
   htmlRender,                      // (params?: HtmlRenderType) => string;
