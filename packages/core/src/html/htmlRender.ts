@@ -10,9 +10,6 @@ export function htmlRender(params?: HtmlRenderType): string {
 ${style ?? ''}
 </head>
 <body>
-  <div class='wrapper'>
-    <div id='blocklyEditor' class='wrap-container'></div>
-  </div>
   ${editor ?? ''}
   ${script ?? ''}
   <script src='https://unpkg.com/blockly/blockly.min.js' defer></script>
