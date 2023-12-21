@@ -1,6 +1,6 @@
 {
   "name": "@react-blockly/native",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "A React native Blockly visual programming editor.",
   "author": "SerSerch <serserchit@gmail.com> (https://github.com/SerSerch)",
   "license": "MIT",
@@ -43,7 +43,7 @@
     "test": "echo test native"
   },
   "dependencies": {
-    "@react-blockly/core": "^1.5.0",
+    "@react-blockly/core": "^1.5.1",
     "blockly": "^10.0.0"
   },
   "peerDependencies": {
