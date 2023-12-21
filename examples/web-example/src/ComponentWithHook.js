@@ -54,7 +54,7 @@ function ComponentWithHook(props) {
     // change state
     testPromise({ timeout: 5000 }).then(() => {
       updateState(prevState => ({
-        ...prevState,
+        ...prevState.json,
         ...ConfigFiles.NEW_STATE,
       }));
     });
