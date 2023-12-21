@@ -3,9 +3,7 @@ import { useRef } from 'react';
 import Blockly, { WorkspaceSvg } from 'blockly';
 import type { ToolboxDefinition } from 'blockly/core/utils/toolbox';
 
-import { importFromJson } from './helpers/importFromJson';
-import { importFromXml } from './helpers/importFromXml';
-import { nullToUndefined } from './helpers/nullToUndefined';
+import { importFromJson, importFromXml, nullToUndefined } from './helpers';
 import type {
   BlocklyInfoType,
   BlocklyInitType,

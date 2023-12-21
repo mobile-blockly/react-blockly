@@ -3,10 +3,7 @@ import { useRef } from 'react';
 import type { ToolboxDefinition } from 'blockly/core/utils/toolbox';
 import { type WebViewMessageEvent } from 'react-native-webview';
 
-import { htmlEditor } from './html/htmlEditor';
-import { htmlRender } from './html/htmlRender';
-import { htmlScript } from './html/htmlScript';
-import { htmlStyle } from './html/htmlStyle';
+import { htmlEditor, htmlRender, htmlScript, htmlStyle } from './html';
 import type {
   BlocklyInitType,
   BlocklyNativeInfoType,
