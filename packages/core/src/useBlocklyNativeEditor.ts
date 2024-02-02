@@ -59,7 +59,7 @@ const useBlocklyNativeEditor = (
       params?.workspaceConfiguration?.readOnly ||
       workspaceConfiguration?.readOnly
     );
-    _postData('init', {
+    postData('init', {
       workspaceConfiguration:
         params?.workspaceConfiguration || workspaceConfiguration,
       initial: params?.initial || initial,
@@ -68,7 +68,7 @@ const useBlocklyNativeEditor = (
 
   function dispose() {
     if (toolboxConfigRef.current) {
-      _postData('dispose');
+      postData('dispose');
       _onCallback(onDispose, _getData());
       stateRef.current = BlocklyState();
       toolboxConfigRef.current = null;
@@ -108,7 +108,7 @@ const useBlocklyNativeEditor = (
       if (cb && toolboxConfigRef.current) {
         const configuration: ToolboxDefinition = cb(toolboxConfigRef.current);
         if (configuration && !readOnlyRef.current) {
-          _postData('updateToolboxConfig', configuration);
+          postData('updateToolboxConfig', configuration);
         }
       }
     } catch (err) {
@@ -120,7 +120,7 @@ const useBlocklyNativeEditor = (
     try {
       if (cb) {
         const newState: BlocklyNewStateType = cb(stateRef.current);
-        _postData('updateState', newState);
+        postData('updateState', newState);
       }
     } catch (err) {
       _onCallback(onError, err);
@@ -157,7 +157,7 @@ const useBlocklyNativeEditor = (
         });
   }
 
-  function _postData(event: string, data?: any) {
+  function postData(event: string, data?: any) {
     try {
       if (editorRef.current && event) {
         const dataString = JSON.stringify({ event, data });
@@ -201,6 +201,7 @@ const useBlocklyNativeEditor = (
     htmlRender: editorRender,
     updateToolboxConfig,
     updateState,
+    postData,
   };
 };
 

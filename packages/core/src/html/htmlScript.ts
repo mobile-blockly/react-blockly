@@ -172,13 +172,11 @@ window.onload = () => {
 
     function _saveCode() {
       if (_workspace) {
-        _code = {
-          dart: dart?.dartGenerator?.workspaceToCode(_workspace),
-          js: javascript?.javascriptGenerator?.workspaceToCode(_workspace),
-          lua: lua?.luaGenerator?.workspaceToCode(_workspace),
-          php: php?.phpGenerator?.workspaceToCode(_workspace),
-          python: python?.pythonGenerator?.workspaceToCode(_workspace),
-        };
+        if(window.dart) _code.dart = dart.dartGenerator?.workspaceToCode(_workspace);
+        if(window.javascript) _code.js = javascript.javascriptGenerator?.workspaceToCode(_workspace);
+        if(window.lua) _code.lua = lua.luaGenerator?.workspaceToCode(_workspace);
+        if(window.php) _code.php = php.phpGenerator?.workspaceToCode(_workspace);
+        if(window.python) _code.python = python.pythonGenerator?.workspaceToCode(_workspace);
       }
     }
 

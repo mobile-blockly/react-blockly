@@ -6,4 +6,5 @@ import type { HtmlRenderType } from './HtmlRenderType';
 export interface BlocklyNativeInfoType extends BlocklyInfoType {
   onMessage: (e: WebViewMessageEvent) => void;
   htmlRender: (params?: HtmlRenderType) => string;
+  postData: (event: string, data?: any) => void;
 }

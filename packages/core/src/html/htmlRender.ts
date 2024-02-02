@@ -11,8 +11,8 @@ ${style ?? ''}
 </head>
 <body>
   ${editor ?? ''}
-  ${script ?? ''}
   ${packages ?? ''}
+  ${script ?? ''}
 </body>
 </html>
 `;
