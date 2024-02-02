@@ -4,20 +4,20 @@ This project was bootstrapped with [Expo](https://github.com/expo/expo).
 
 ## Available Scripts
 
-In the project directory, you can run:
+It is configured for a monorepository. If you want to run it, go to the root of the project and run:
 
-### `yarn start`
+### `yarn native start`
 
 Runs the expo server.
 
-### `yarn web`
+### `yarn native web`
 
 Runs the app in your browser.
 
-### `yarn android`
+### `yarn native android`
 
 Runs the app in android simulator.
 
-### `yarn ios`
+### `yarn native ios`
 
 Runs the app in ios simulator.

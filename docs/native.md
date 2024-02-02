@@ -15,7 +15,7 @@ yarn add @react-blockly/native
 To add @react-blockly/native to an Expo Go app that uses expo, run:
 
 ```sh
-expo install @react-blockly/native
+npx expo install @react-blockly/native
 ```
 
 ## Usage
