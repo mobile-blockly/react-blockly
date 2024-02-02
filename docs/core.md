@@ -21,6 +21,9 @@ import { useBlocklyEditor } from '@react-blockly/core';
 
 // ...
 
+function onChange({xml, json, dart, js, lua, php, python}) {
+}
+
 const myEditor = useBlocklyEditor( // type UseBlocklyEditorType;
   workspaceConfiguration,          // null | Blockly.BlocklyOptions;
   initial,                         // null | string | object;
@@ -28,7 +31,7 @@ const myEditor = useBlocklyEditor( // type UseBlocklyEditorType;
   onError,                         // null | (error: any) => void;
   onInject,                        // null | (state: BlocklyCbStateType) => void;
   onDispose,                       // null | (state: BlocklyCbStateType) => void;
-  onChange,                        // null | (state: BlocklyStateType) => void;
+  onChange,                        // null | (state: BlocklyCbStateType) => void;
 );
 
 const {
@@ -36,6 +39,7 @@ const {
   init,                            // (params?: null | BlocklyInitType) => void;
   dispose,                         // () => void;
   state,                           // () => BlocklyStateType;
+  code,                            // () => BlocklyCodeType;
   updateState,                    /** (cb: (
                                    *    state: BlocklyStateType
                                    *  ) => object) => void;
@@ -72,14 +76,17 @@ import { useBlocklyNativeEditor } from '@react-blockly/core';
 
 // ...
 
+function onChange({xml, json, dart, js, lua, php, python}) {
+}
+
 const myEditor = useBlocklyNativeEditor( // type UseBlocklyNativeEditorType;
   workspaceConfiguration,          // null | Blockly.BlocklyOptions;
   initial,                         // null | string | object;
   platform,                        // null | string; (default 'ios')
   onError,                         // null | (error: any) => void;
-  onInject,                        // null | (state: BlocklyStateType) => void;
-  onDispose,                       // null | (state: BlocklyStateType) => void;
-  onChange,                        // null | (state: BlocklyStateType) => void;
+  onInject,                        // null | (state: BlocklyCbStateType) => void;
+  onDispose,                       // null | (state: BlocklyCbStateType) => void;
+  onChange,                        // null | (state: BlocklyCbStateType) => void;
 );
 
 const {
@@ -87,8 +94,10 @@ const {
   init,                            // (params?: null | BlocklyInitType) => void;
   dispose,                         // () => void;
   state,                           // () => BlocklyStateType;
+  code,                            // () => BlocklyCodeType;
   htmlRender,                      // (params?: HtmlRenderType) => string;
   onMessage,                       // (e: WebViewMessageEvent) => void;
+  postData,                        // (event: string, data?: any) => void;
   updateState,                    /** (cb: (
                                    *    state: BlocklyStateType
                                    *  ) => object) => void;

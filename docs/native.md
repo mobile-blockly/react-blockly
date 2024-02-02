@@ -27,13 +27,18 @@ import { BlocklyEditor } from '@react-blockly/native';
 
 // ...
 
+function onChange({xml, json, dart, js, lua, php, python}) {
+}
+
+// ...
+
 <BlocklyEditor
   style={{backgroundColor: '#fff'}}                // null | object | Array<object>
   workspaceConfiguration={workspaceConfiguration}  // null | Blockly.BlocklyOptions;
   initial={initial}                                // null | string | object;
   onError={onError}                                // null | (error: any) => void;
-  onInject={onInject}                              // null | (state: BlocklyStateType) => void;
-  onDispose={onDispose}                            // null | (state: BlocklyStateType) => void;
-  onChange={onChange}                              // null | (state: BlocklyStateType) => void;
+  onInject={onInject}                              // null | (state: BlocklyCbStateType) => void;
+  onDispose={onDispose}                            // null | (state: BlocklyCbStateType) => void;
+  onChange={onChange}                              // null | (state: BlocklyCbStateType) => void;
 />
 ```
