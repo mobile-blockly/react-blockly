@@ -45,8 +45,8 @@ function App() {
     console.log('onInject', workspace, xml, json);
   }, []);
 
-  const onChange = useCallback(({ xml, json }) => {
-    console.log('onChange', xml, json);
+  const onChange = useCallback(({ xml, json, js }) => {
+    console.log('onChange', xml, json, js);
   }, []);
 
   const onDispose = useCallback(({ workspace, xml, json }) => {

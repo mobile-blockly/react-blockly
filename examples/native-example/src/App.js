@@ -47,8 +47,8 @@ export function App() {
     console.log('onInject', xml, JSON.stringify(json));
   }, []);
 
-  const onChange = useCallback(({ xml, json }) => {
-    console.log('onChange', xml, JSON.stringify(json));
+  const onChange = useCallback(({ xml, json, js }) => {
+    console.log('onChange', xml, JSON.stringify(json), js);
   }, []);
 
   const onDispose = useCallback(({ xml, json }) => {
