@@ -3,8 +3,16 @@ import { useRef } from 'react';
 import type { ToolboxDefinition } from 'blockly/core/utils/toolbox';
 import { type WebViewMessageEvent } from 'react-native-webview';
 
-import { htmlEditor, htmlRender, htmlScript, htmlStyle } from './html';
+import {
+  htmlEditor,
+  htmlPackages,
+  htmlRender,
+  htmlScript,
+  htmlStyle,
+} from './html';
 import type {
+  BlocklyCbStateType,
+  BlocklyCodeType,
   BlocklyInitType,
   BlocklyNativeInfoType,
   BlocklyNewStateType,
@@ -29,6 +37,13 @@ const useBlocklyNativeEditor = (
   const stateRef = useRef<BlocklyStateType>(BlocklyState());
   const toolboxConfigRef = useRef<ToolboxDefinition | null>(null);
   const readOnlyRef = useRef<boolean>(false);
+  const codeRef = useRef<BlocklyCodeType>({
+    dart: '',
+    js: '',
+    lua: '',
+    php: '',
+    python: '',
+  });
 
   function init(params?: null | BlocklyInitType) {
     if (
@@ -54,7 +69,7 @@ const useBlocklyNativeEditor = (
   function dispose() {
     if (toolboxConfigRef.current) {
       _postData('dispose');
-      _onCallback(onDispose, stateRef.current);
+      _onCallback(onDispose, _getData());
       stateRef.current = BlocklyState();
       toolboxConfigRef.current = null;
       readOnlyRef.current = false;
@@ -67,11 +82,12 @@ const useBlocklyNativeEditor = (
       switch (event) {
         case 'onInject':
           stateRef.current = BlocklyState(data);
-          _onCallback(onInject, stateRef.current);
+          _onCallback(onInject, _getData());
           break;
         case 'onChange':
           stateRef.current = BlocklyState(data);
-          _onCallback(onChange, stateRef.current);
+          _saveCode(data);
+          _onCallback(onChange, _getData());
           break;
         case 'onError':
           _onCallback(onError, data);
@@ -115,6 +131,10 @@ const useBlocklyNativeEditor = (
     return stateRef.current;
   }
 
+  function code(): BlocklyCodeType {
+    return codeRef.current;
+  }
+
   function BlocklyState(state?: BlocklyStateType): BlocklyStateType {
     return {
       xml:
@@ -125,7 +145,7 @@ const useBlocklyNativeEditor = (
   }
 
   function editorRender(params?: null | HtmlRenderType) {
-    const { style, script, editor } = params ?? {};
+    const { style, script, editor, packages } = params ?? {};
 
     return platform === 'web'
       ? ''
@@ -133,6 +153,7 @@ const useBlocklyNativeEditor = (
           style: htmlStyle(style),
           script: htmlScript(script),
           editor: editor ?? htmlEditor(),
+          packages: htmlPackages(packages),
         });
   }
 
@@ -147,6 +168,23 @@ const useBlocklyNativeEditor = (
     }
   }
 
+  function _saveCode(data?: BlocklyCbStateType) {
+    codeRef.current = {
+      dart: data?.dart || '',
+      js: data?.js || '',
+      lua: data?.lua || '',
+      php: data?.php || '',
+      python: data?.python || '',
+    };
+  }
+
+  function _getData(): BlocklyCbStateType {
+    return {
+      ...stateRef.current,
+      ...codeRef.current,
+    };
+  }
+
   function _onCallback(cb?: (arg?: any) => void, arg?: any) {
     if (cb) {
       cb(arg);
@@ -158,6 +196,7 @@ const useBlocklyNativeEditor = (
     init,
     dispose,
     state,
+    code,
     onMessage,
     htmlRender: editorRender,
     updateToolboxConfig,

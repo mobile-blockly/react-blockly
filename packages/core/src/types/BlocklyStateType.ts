@@ -6,7 +6,12 @@ export interface BlocklyStateType {
 }
 
 export interface BlocklyCbStateType extends BlocklyStateType {
-  workspace?: WorkspaceSvg;
+  workspace?: null | WorkspaceSvg;
+  dart: string;
+  js: string;
+  lua: string;
+  php: string;
+  python: string;
 }
 
 export type BlocklyNewStateType = object;

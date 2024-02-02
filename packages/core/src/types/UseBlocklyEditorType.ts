@@ -1,6 +1,6 @@
 import Blockly from 'blockly';
 
-import type { BlocklyCbStateType, BlocklyStateType } from './BlocklyStateType';
+import type { BlocklyCbStateType } from './BlocklyStateType';
 
 export interface UseBlocklyEditorType {
   workspaceConfiguration?: null | Blockly.BlocklyOptions;
@@ -9,5 +9,5 @@ export interface UseBlocklyEditorType {
   onError?: (error: any) => void;
   onInject?: (state: BlocklyCbStateType) => void;
   onDispose?: (state: BlocklyCbStateType) => void;
-  onChange?: (state: BlocklyStateType) => void;
+  onChange?: (state: BlocklyCbStateType) => void;
 }

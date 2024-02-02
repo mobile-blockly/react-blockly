@@ -1,3 +1,4 @@
+export type { BlocklyCodeType } from './BlocklyCodeType';
 export type { BlocklyInfoType } from './BlocklyInfoType';
 export type { BlocklyInitType } from './BlocklyInitType';
 export type { BlocklyNativeInfoType } from './BlocklyNativeInfoType';

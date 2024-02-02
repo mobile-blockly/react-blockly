@@ -1,7 +1,7 @@
 import type { HtmlRenderType } from '../types';
 
 export function htmlRender(params?: HtmlRenderType): string {
-  const { style, script, editor } = params ?? {};
+  const { style, script, editor, packages } = params ?? {};
   return `
 <html>
 <head>
@@ -12,7 +12,7 @@ ${style ?? ''}
 <body>
   ${editor ?? ''}
   ${script ?? ''}
-  <script src='https://unpkg.com/blockly/blockly.min.js' defer></script>
+  ${packages ?? ''}
 </body>
 </html>
 `;

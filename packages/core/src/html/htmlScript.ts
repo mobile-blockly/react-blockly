@@ -51,6 +51,13 @@ window.onload = () => {
     let _toolboxConfig = null;
     let _state = BlocklyState();
     let _readOnly = false;
+    let _code = {
+      dart: '',
+      js: '',
+      lua: '',
+      php: '',
+      python: '',
+    };
 
     function init(params) {
       const element = document.querySelector('#blocklyEditor');
@@ -65,7 +72,7 @@ window.onload = () => {
         _toolboxConfig = params?.workspaceConfiguration?.toolbox || {contents: []};
         _readOnly = !!params?.workspaceConfiguration?.readOnly;
         onCallback('toolboxConfig', _toolboxConfig);
-        onCallback('onInject', _state);
+        onCallback('onInject', _getData());
         _setState(params?.initial);
         _workspace.addChangeListener(listener);
       }
@@ -118,6 +125,10 @@ window.onload = () => {
       return _state;
     }
 
+    function code() {
+      return _code;
+    }
+
     function BlocklyState({xml, json} = {}) {
       return {
         xml: xml || '<xml xmlns="https://developers.google.com/blockly/xml"></xml>',
@@ -147,7 +158,8 @@ window.onload = () => {
               xml: newXml,
               json: Blockly.serialization.workspaces.save(_workspace),
             });
-            onCallback('onChange', _state);
+            _saveCode()
+            onCallback('onChange', _getData());
             return true;
           }
         }
@@ -158,11 +170,31 @@ window.onload = () => {
       }
     }
 
+    function _saveCode() {
+      if (_workspace) {
+        _code = {
+          dart: dart?.dartGenerator?.workspaceToCode(_workspace),
+          js: javascript?.javascriptGenerator?.workspaceToCode(_workspace),
+          lua: lua?.luaGenerator?.workspaceToCode(_workspace),
+          php: php?.phpGenerator?.workspaceToCode(_workspace),
+          python: python?.pythonGenerator?.workspaceToCode(_workspace),
+        };
+      }
+    }
+
+    function _getData() {
+      return {
+        ..._state,
+        ..._code,
+      };
+    }
+
     return {
       workspace: _workspace,
       init,
       dispose,
       state,
+      code,
       updateToolboxConfig,
       updateState,
     };

@@ -2,9 +2,16 @@ import { useRef } from 'react';
 
 import Blockly, { WorkspaceSvg } from 'blockly';
 import type { ToolboxDefinition } from 'blockly/core/utils/toolbox';
+import { dartGenerator } from 'blockly/dart';
+import { javascriptGenerator } from 'blockly/javascript';
+import { luaGenerator } from 'blockly/lua';
+import { phpGenerator } from 'blockly/php';
+import { pythonGenerator } from 'blockly/python';
 
 import { importFromJson, importFromXml, nullToUndefined } from './helpers';
 import type {
+  BlocklyCbStateType,
+  BlocklyCodeType,
   BlocklyInfoType,
   BlocklyInitType,
   BlocklyNewStateType,
@@ -29,6 +36,13 @@ const useBlocklyEditor = (
   const stateRef = useRef<BlocklyStateType>(BlocklyState());
   const toolboxConfigRef = useRef<ToolboxDefinition | null>(null);
   const readOnlyRef = useRef<boolean>(false);
+  const codeRef = useRef<BlocklyCodeType>({
+    dart: '',
+    js: '',
+    lua: '',
+    php: '',
+    python: '',
+  });
 
   function init(params?: null | BlocklyInitType) {
     if (!editorRef.current || toolboxConfigRef.current || platform !== 'web') {
@@ -50,10 +64,7 @@ const useBlocklyEditor = (
         params?.workspaceConfiguration?.readOnly ||
         workspaceConfiguration?.readOnly
       );
-      _onCallback(onInject, {
-        workspace,
-        ...stateRef.current,
-      });
+      _onCallback(onInject, _getData());
       _setState(params?.initial || initial);
       workspace.addChangeListener(listener);
     }
@@ -63,10 +74,7 @@ const useBlocklyEditor = (
     if (workspaceRef.current) {
       workspaceRef.current.removeChangeListener(listener);
       workspaceRef.current.dispose();
-      _onCallback(onDispose, {
-        workspace: workspaceRef.current,
-        ...stateRef.current,
-      });
+      _onCallback(onDispose, _getData());
       workspaceRef.current = null;
       toolboxConfigRef.current = null;
       stateRef.current = BlocklyState();
@@ -111,6 +119,10 @@ const useBlocklyEditor = (
     return stateRef.current;
   }
 
+  function code(): BlocklyCodeType {
+    return codeRef.current;
+  }
+
   function BlocklyState(state?: BlocklyStateType): BlocklyStateType {
     return {
       xml:
@@ -142,10 +154,8 @@ const useBlocklyEditor = (
             xml: newXml,
             json: Blockly.serialization.workspaces.save(workspaceRef.current),
           });
-          _onCallback(onChange, {
-            workspace: workspaceRef.current,
-            ...stateRef.current,
-          });
+          _saveCode();
+          _onCallback(onChange, _getData());
           return true;
         }
       }
@@ -154,6 +164,26 @@ const useBlocklyEditor = (
       _onCallback(onError, err);
       return false;
     }
+  }
+
+  function _saveCode() {
+    if (workspaceRef.current) {
+      codeRef.current = {
+        dart: dartGenerator.workspaceToCode(workspaceRef.current!),
+        js: javascriptGenerator.workspaceToCode(workspaceRef.current!),
+        lua: luaGenerator.workspaceToCode(workspaceRef.current!),
+        php: phpGenerator.workspaceToCode(workspaceRef.current!),
+        python: pythonGenerator.workspaceToCode(workspaceRef.current!),
+      };
+    }
+  }
+
+  function _getData(): BlocklyCbStateType {
+    return {
+      workspace: workspaceRef.current,
+      ...stateRef.current,
+      ...codeRef.current,
+    } as BlocklyCbStateType;
   }
 
   function _onCallback(cb?: (arg?: any) => void, arg?: any) {
@@ -167,6 +197,7 @@ const useBlocklyEditor = (
     init,
     dispose,
     state,
+    code,
     updateToolboxConfig,
     updateState,
   };
