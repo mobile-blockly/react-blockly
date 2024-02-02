@@ -2,6 +2,63 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.6.0](https://github.com/SerSerch/react-blockly/compare/@react-blockly/core@1.5.0...@react-blockly/core@1.6.0) (2024-02-02)
+
+### Features
+
+* add BlocklyCodeType
+* add htmlPackages
+* add code method
+
+<details><summary>Click to see the code</summary>
+
+```js
+const myEditor = useBlocklyEditor({
+  onChange,
+});
+
+const {
+  editorRef,
+  init,
+  dispose,
+  state,              // () => BlocklyStateType;
+  code,               // () => BlocklyCodeType;
+} = myEditor;
+
+const myNativeEditor = useBlocklyNativeEditor({
+  onChange,
+});
+
+const {xml, json} = state();
+const {dart, js, lua, php, python} = code();
+
+function onChange({xml, json, dart, js, lua, php, python}) {
+}
+```
+
+```js
+const myEditor = useBlocklyNativeEditor({
+  onChange,
+});
+
+const {
+  editorRef,
+  init,
+  dispose,
+  state,              // () => BlocklyStateType;
+  code,               // () => BlocklyCodeType;
+  postData,           // (event: string, data?: any) => void;
+} = myEditor;
+
+const {xml, json} = state();
+const {dart, js, lua, php, python} = code();
+
+function onChange({xml, json, dart, js, lua, php, python}) {
+}
+```
+
+</details>
+
 # [1.5.0](https://github.com/SerSerch/react-blockly/compare/@react-blockly/core@1.4.0...@react-blockly/core@1.5.0) (2023-12-19)
 
 ### Features
