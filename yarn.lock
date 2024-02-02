@@ -3662,7 +3662,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-blockly/core@npm:^1.5.1, @react-blockly/core@workspace:packages/core":
+"@react-blockly/core@npm:^1.6.0, @react-blockly/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@react-blockly/core@workspace:packages/core"
   dependencies:
@@ -3693,7 +3693,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-blockly/native@workspace:packages/native"
   dependencies:
-    "@react-blockly/core": "npm:^1.5.1"
+    "@react-blockly/core": "npm:^1.6.0"
     blockly: "npm:^10.3.1"
   peerDependencies:
     react: "*"
@@ -3717,7 +3717,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-blockly/web@workspace:packages/web"
   dependencies:
-    "@react-blockly/core": "npm:^1.5.1"
+    "@react-blockly/core": "npm:^1.6.0"
     blockly: "npm:^10.3.1"
   peerDependencies:
     react: "*"
