@@ -98,6 +98,7 @@ const {
   htmlRender,                      // (params?: HtmlRenderType) => string;
   onMessage,                       // (e: WebViewMessageEvent) => void;
   postData,                        // (event: string, data?: any) => void;
+  runJS,                           // (code: string) => void;
   updateState,                    /** (cb: (
                                    *    state: BlocklyStateType
                                    *  ) => object) => void;

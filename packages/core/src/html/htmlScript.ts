@@ -200,11 +200,23 @@ window.onload = () => {
 
   const editor = BlocklyEditor();
 
+  const events = {
+    eval: function (data) {
+      try {
+        eval(data);
+      } catch (err) {
+        onCallback('onError', err?.toString());
+      }
+    },
+  };
+
   function handleEvent(message) {
     try {
       const { event, data } = JSON.parse(message.data);
       if (editor[event]) {
         editor[event](data);
+      } else if (events[event]) {
+        events[event](data);
       }
     } catch (err) {
       onCallback('onError', err?.toString());
