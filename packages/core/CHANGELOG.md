@@ -2,12 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.7.0](https://github.com/SerSerch/react-blockly/compare/@react-blockly/core@1.6.0...@react-blockly/core@1.7.0) (2024-02-03)
+
+### Features
+
+* add js eval event
+* add native runJS method
+
+<details><summary>Click to see the code</summary>
+
+```js
+const myEditor = useBlocklyNativeEditor();
+
+myEditor.runJS('alert(editor.state().xml)');
+```
+
+</details>
+
 # [1.6.0](https://github.com/SerSerch/react-blockly/compare/@react-blockly/core@1.5.0...@react-blockly/core@1.6.0) (2024-02-02)
 
 ### Features
 
 * add BlocklyCodeType
 * add htmlPackages
+* add postData method
 * add code method
 
 <details><summary>Click to see the code</summary>
