@@ -168,6 +168,10 @@ const useBlocklyNativeEditor = (
     }
   }
 
+  function runJS(code: string) {
+    postData('eval', code);
+  }
+
   function _saveCode(data?: BlocklyCbStateType) {
     codeRef.current = {
       dart: data?.dart || '',
@@ -202,6 +206,7 @@ const useBlocklyNativeEditor = (
     updateToolboxConfig,
     updateState,
     postData,
+    runJS,
   };
 };
 
