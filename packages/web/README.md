@@ -8,11 +8,11 @@
 
 ## Installation
 
-See [Installation Instructions](https://github.com/SerSerch/react-blockly/blob/main/docs/web.md).
+See [Installation Instructions](https://github.com/react-blockly/react-blockly/blob/main/docs/web.md).
 
 ## Example
 
-[@react-blockly/web-example](https://github.com/SerSerch/react-blockly/blob/main/examples/web-example)
+[@react-blockly/web-example](https://github.com/react-blockly/react-blockly/blob/main/examples/web-example)
 
 ## License
 

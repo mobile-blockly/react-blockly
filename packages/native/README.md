@@ -8,11 +8,11 @@
 
 ## Installation
 
-See [Installation Instructions](https://github.com/SerSerch/react-blockly/blob/main/docs/native.md).
+See [Installation Instructions](https://github.com/react-blockly/react-blockly/blob/main/docs/native.md).
 
 ## Example
 
-[@react-blockly/native-example](https://github.com/SerSerch/react-blockly/blob/main/examples/native-example)
+[@react-blockly/native-example](https://github.com/react-blockly/react-blockly/blob/main/examples/native-example)
 
 ## License
 

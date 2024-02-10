@@ -31,11 +31,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SerSerch/react-blockly.git",
+    "url": "git+https://github.com/react-blockly/react-blockly.git",
     "directory": "packages/native"
   },
   "bugs": {
-    "url": "https://github.com/SerSerch/react-blockly/issues"
+    "url": "https://github.com/react-blockly/react-blockly/issues"
   },
   "scripts": {
     "build": "bob build",
