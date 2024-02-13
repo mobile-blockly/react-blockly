@@ -8,18 +8,20 @@
     "packages/*",
     "examples/*"
   ],
-  "packageManager": "yarn@4.0.2",
+  "packageManager": "yarn@4.1.0",
   "engines": {
     "node": ">=18.0.0",
     "yarn": ">=4.0.0"
   },
   "scripts": {
-    "web": "yarn workspace @react-blockly/web-example",
-    "native": "yarn workspace @react-blockly/native-example",
+    "lint": "eslint \"./packages/**/src/**/*.{js,jsx,ts,tsx}\"",
+    "typecheck": "tsc --noEmit --composite false",
+    "test": "jest",
+    "clean": "lerna run build --no-private",
     "build": "lerna run build --no-private",
     "release": "lerna publish --no-private",
-    "test": "jest",
-    "lint": "eslint \"./packages/**/src/**/*.{js,jsx,ts,tsx}\""
+    "web": "yarn workspace @react-blockly/web-example",
+    "native": "yarn workspace @react-blockly/native-example"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
