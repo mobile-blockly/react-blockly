@@ -17,7 +17,7 @@
     "lint": "eslint \"./packages/**/src/**/*.{js,jsx,ts,tsx}\"",
     "typecheck": "tsc --noEmit --composite false",
     "test": "jest",
-    "clean": "lerna run build --no-private",
+    "clean": "lerna run clean --no-private",
     "build": "lerna run build --no-private",
     "release": "lerna publish --no-private",
     "web": "yarn workspace @react-blockly/web-example",

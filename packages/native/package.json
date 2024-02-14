@@ -39,7 +39,7 @@
   },
   "scripts": {
     "build": "bob build",
-    "clean": "del lib",
+    "clean": "del-cli lib",
     "test": "echo test native"
   },
   "dependencies": {
