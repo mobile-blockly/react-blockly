@@ -2,6 +2,7 @@
 
 [![Built on Blockly](https://tinyurl.com/built-on-blockly)](https://github.com/google/blockly)
 [![types - typescript](https://img.shields.io/npm/types/badge-maker)](https://www.typescriptlang.org)
+[![StandWithUkraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md)
 
 A React Blockly visual programming editor.
 <br/>
