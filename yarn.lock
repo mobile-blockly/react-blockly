@@ -3654,7 +3654,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-blockly/core@workspace:packages/core"
   dependencies:
-    blockly: "npm:^10.3.1"
+    blockly: "npm:^10.4.1"
   peerDependencies:
     react: "*"
   languageName: unknown
@@ -3681,7 +3681,7 @@ __metadata:
   resolution: "@react-blockly/native@workspace:packages/native"
   dependencies:
     "@react-blockly/core": "npm:^1.7.2"
-    blockly: "npm:^10.3.1"
+    blockly: "npm:^10.4.1"
   peerDependencies:
     react: "*"
     react-native: "*"
@@ -3705,7 +3705,7 @@ __metadata:
   resolution: "@react-blockly/web@workspace:packages/web"
   dependencies:
     "@react-blockly/core": "npm:^1.7.2"
-    blockly: "npm:^10.3.1"
+    blockly: "npm:^10.4.1"
   peerDependencies:
     react: "*"
   languageName: unknown
@@ -6709,15 +6709,6 @@ __metadata:
     inherits: "npm:^2.0.4"
     readable-stream: "npm:^3.4.0"
   checksum: 10c0/02847e1d2cb089c9dc6958add42e3cdeaf07d13f575973963335ac0fdece563a50ac770ac4c8fa06492d2dd276f6cc3b7f08c7cd9c7a7ad0f8d388b2a28def5f
-  languageName: node
-  linkType: hard
-
-"blockly@npm:^10.3.1":
-  version: 10.3.1
-  resolution: "blockly@npm:10.3.1"
-  dependencies:
-    jsdom: "npm:22.1.0"
-  checksum: 10c0/d749c3c03c884219025a6e5c1e43ea71a9a29e65b91084d7fc9d0fef5d837973cce3c6fa1f752138154e1e760a5e6b8df3c2b9cfaccd65c6bbc735dc9dba86aa
   languageName: node
   linkType: hard
 
@@ -18117,7 +18108,7 @@ __metadata:
     "@evilmartians/lefthook": "npm:^1.6.1"
     "@react-native/eslint-config": "npm:^0.73.2"
     "@types/jest": "npm:^29.5.12"
-    "@types/react": "npm:^18.2.56"
+    "@types/react": "npm:^18.2.51"
     "@types/react-native": "npm:^0.72.8"
     "@types/react-native-get-random-values": "npm:^1"
     "@types/uuid": "npm:^9"
