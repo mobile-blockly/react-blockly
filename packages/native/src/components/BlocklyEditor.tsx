@@ -30,14 +30,22 @@ function EditorComponent(props: BlocklyEditorType) {
   }
 
   return Platform.OS === 'web' ? (
-    <View style={[{ flex: 1 }, props.style]} ref={webEditor.editorRef} />
+    <View
+      style={[{ flex: 1 }, props.containerStyle]}
+      ref={webEditor.editorRef}
+    />
   ) : (
     <WebView
-      style={[{ flex: 1 }, props.style]}
+      style={[{ flex: 1 }, props.containerStyle]}
       ref={nativeEditor.editorRef}
       originWhitelist={['*']}
       source={{
-        html: nativeEditor.htmlRender(),
+        html: nativeEditor.htmlRender({
+          style: props.style,
+          script: props.script,
+          editor: props.editor,
+          packages: props.packages,
+        }),
       }}
       onMessage={nativeEditor.onMessage}
       onLoadEnd={onLoadEnd}
