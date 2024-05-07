@@ -59,18 +59,5 @@
   },
   "resolutions": {
     "@types/react": "^18.2.51"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "testRegex": "/__tests__/.*\\.(test|spec)\\.(js|tsx?)$",
-    "setupFiles": [],
-    "transformIgnorePatterns": [
-      "node_modules/(?!(@react-native|react-native|react-native-reanimated)/)"
-    ],
-    "moduleNameMapper": {
-      "@react-blockly/([^/]+)": "<rootDir>/packages/$1/src"
-    },
-    "prettierPath": null,
-    "preset": "react-native"
   }
 }
