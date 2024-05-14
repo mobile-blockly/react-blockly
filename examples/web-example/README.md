@@ -4,24 +4,33 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-It is configured for a monorepository. If you want to run it, go to the root of the project and run:
+>**Note**: It is configured for a monorepository. If you want to run it, go to the root of the project and run:
 
-### `yarn web start`
+### Runs the app in the development mode
 
-Runs the app in the development mode.\
+```bash
+yarn web start
+```
+
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `yarn web test`
+### Launches the test runner in the interactive watch mode
 
-Launches the test runner in the interactive watch mode.\
+```bash
+yarn web test
+```
+
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn web build`
+### Builds the app for production to the `build` folder
 
-Builds the app for production to the `build` folder.\
+```bash
+yarn web start
+```
+
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.\
