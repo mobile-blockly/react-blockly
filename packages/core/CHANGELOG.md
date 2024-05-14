@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-# [1.7.0](https://github.com/react-blockly/react-blockly/compare/@react-blockly/core@1.6.0...@react-blockly/core@1.7.0) (2024-02-03)
+# [1.7.0](https://github.com/mobile-blockly/react-blockly/compare/@react-blockly/core@1.6.0...@react-blockly/core@1.7.0) (2024-02-03)
 
 ### Features
 
@@ -19,7 +19,7 @@ myEditor.runJS('alert(editor.state().xml)');
 
 </details>
 
-# [1.6.0](https://github.com/react-blockly/react-blockly/compare/@react-blockly/core@1.5.0...@react-blockly/core@1.6.0) (2024-02-02)
+# [1.6.0](https://github.com/mobile-blockly/react-blockly/compare/@react-blockly/core@1.5.0...@react-blockly/core@1.6.0) (2024-02-02)
 
 ### Features
 
@@ -77,14 +77,14 @@ function onChange({xml, json, dart, js, lua, php, python}) {
 
 </details>
 
-# [1.5.0](https://github.com/react-blockly/react-blockly/compare/@react-blockly/core@1.4.0...@react-blockly/core@1.5.0) (2023-12-19)
+# [1.5.0](https://github.com/mobile-blockly/react-blockly/compare/@react-blockly/core@1.4.0...@react-blockly/core@1.5.0) (2023-12-19)
 
 ### Features
 
 * add htmlEditor
 * add nullToUndefined - null safety
 
-# [1.4.0](https://github.com/react-blockly/react-blockly/compare/@react-blockly/core@1.3.0...@react-blockly/core@1.4.0) (2023-12-04)
+# [1.4.0](https://github.com/mobile-blockly/react-blockly/compare/@react-blockly/core@1.3.0...@react-blockly/core@1.4.0) (2023-12-04)
 
 ### Bug Fixes
 
@@ -127,7 +127,7 @@ useEffect(() => {
 * remove `onLoadEnd` from `useBlocklyNativeEditor`
 * remove `auto init` from `useBlocklyEditor` and `useBlocklyNativeEditor`
 
-# [1.3.0](https://github.com/react-blockly/react-blockly/compare/@react-blockly/core@1.2.0...@react-blockly/core@1.3.0) (2023-12-03)
+# [1.3.0](https://github.com/mobile-blockly/react-blockly/compare/@react-blockly/core@1.2.0...@react-blockly/core@1.3.0) (2023-12-03)
 
 ### Bug Fixes
 
@@ -167,7 +167,7 @@ useEffect(() => {
 
 </details>
 
-# [1.2.0](https://github.com/react-blockly/react-blockly/compare/@react-blockly/core@1.1.0...@react-blockly/core@1.2.0) (2023-12-01)
+# [1.2.0](https://github.com/mobile-blockly/react-blockly/compare/@react-blockly/core@1.1.0...@react-blockly/core@1.2.0) (2023-12-01)
 
 ### Features
 
@@ -199,7 +199,7 @@ useEffect(() => {
 
 </details>
 
-# [1.1.0](https://github.com/react-blockly/react-blockly/compare/@react-blockly/core@1.0.1...@react-blockly/core@1.1.0) (2023-11-21)
+# [1.1.0](https://github.com/mobile-blockly/react-blockly/compare/@react-blockly/core@1.0.1...@react-blockly/core@1.1.0) (2023-11-21)
 
 ### Bug Fixes
 

@@ -9,14 +9,14 @@
 
 ## Installation
 
-See [Installation Instructions](https://github.com/react-blockly/react-blockly/blob/main/docs/core.md).
+See [Installation Instructions](https://github.com/mobile-blockly/react-blockly/blob/main/docs/core.md).
 
-## [Change Log](https://github.com/react-blockly/react-blockly/blob/main/packages/core/CHANGELOG.md)
+## [Change Log](https://github.com/mobile-blockly/react-blockly/blob/main/packages/core/CHANGELOG.md)
 
 ## Example
 
-[@react-blockly/web-example](https://github.com/react-blockly/react-blockly/blob/main/examples/web-example)\
-[@react-blockly/native-example](https://github.com/react-blockly/react-blockly/blob/main/examples/native-example)
+[@react-blockly/web-example](https://github.com/mobile-blockly/react-blockly/blob/main/examples/web-example)\
+[@react-blockly/native-example](https://github.com/mobile-blockly/react-blockly/blob/main/examples/native-example)
 
 ## License
 
