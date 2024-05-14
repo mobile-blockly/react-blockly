@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 
-import Blockly, { WorkspaceSvg } from 'blockly';
-import type { ToolboxDefinition } from 'blockly/core/utils/toolbox';
+import * as Blockly from 'blockly';
 import { dartGenerator } from 'blockly/dart';
 import { javascriptGenerator } from 'blockly/javascript';
 import { luaGenerator } from 'blockly/lua';
@@ -32,9 +31,10 @@ const useBlocklyEditor = (
     platform = 'web',
   } = params ?? {};
   const editorRef = useRef<any>(null);
-  const workspaceRef = useRef<WorkspaceSvg | null>(null);
+  const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null);
   const stateRef = useRef<BlocklyStateType>(BlocklyState());
-  const toolboxConfigRef = useRef<ToolboxDefinition | null>(null);
+  const toolboxConfigRef =
+    useRef<Blockly.utils.toolbox.ToolboxDefinition | null>(null);
   const readOnlyRef = useRef<boolean>(false);
   const codeRef = useRef<BlocklyCodeType>({
     dart: '',
@@ -59,7 +59,7 @@ const useBlocklyEditor = (
       toolboxConfigRef.current = (params?.workspaceConfiguration?.toolbox ||
         workspaceConfiguration?.toolbox || {
           contents: [],
-        }) as ToolboxDefinition;
+        }) as Blockly.utils.toolbox.ToolboxDefinition;
       readOnlyRef.current = !!(
         params?.workspaceConfiguration?.readOnly ||
         workspaceConfiguration?.readOnly
@@ -89,11 +89,15 @@ const useBlocklyEditor = (
   }
 
   function updateToolboxConfig(
-    cb: (configuration: ToolboxDefinition) => ToolboxDefinition,
+    cb: (
+      configuration: Blockly.utils.toolbox.ToolboxDefinition,
+    ) => Blockly.utils.toolbox.ToolboxDefinition,
   ) {
     try {
       if (cb && toolboxConfigRef.current) {
-        const configuration: ToolboxDefinition = cb(toolboxConfigRef.current);
+        const configuration: Blockly.utils.toolbox.ToolboxDefinition = cb(
+          toolboxConfigRef.current,
+        );
         if (configuration && workspaceRef.current && !readOnlyRef.current) {
           toolboxConfigRef.current = configuration;
           workspaceRef.current.updateToolbox(configuration);

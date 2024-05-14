@@ -1,8 +1,8 @@
-import Blockly, { WorkspaceSvg } from 'blockly';
+import * as Blockly from 'blockly';
 
 function importFromJson(
   json: object,
-  workspace: WorkspaceSvg,
+  workspace: Blockly.WorkspaceSvg,
   onError?: (error: any) => void,
 ) {
   try {

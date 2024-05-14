@@ -1,4 +1,4 @@
-import { type WebViewMessageEvent } from 'react-native-webview';
+import type { WebViewMessageEvent } from 'react-native-webview';
 
 import type { BlocklyInfoType } from './BlocklyInfoType';
 import type { HtmlRenderType } from './HtmlRenderType';

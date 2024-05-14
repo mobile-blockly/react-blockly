@@ -1,4 +1,5 @@
-import React, { memo, type PropsWithChildren, useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
+import type { PropsWithChildren } from 'react';
 
 import { useBlocklyEditor } from '@react-blockly/core';
 

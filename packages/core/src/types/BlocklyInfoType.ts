@@ -1,6 +1,6 @@
-import { type MutableRefObject } from 'react';
+import type { MutableRefObject } from 'react';
 
-import { type ToolboxDefinition } from 'blockly/core/utils/toolbox';
+import * as Blockly from 'blockly';
 
 import type { BlocklyCodeType } from './BlocklyCodeType';
 import type { BlocklyInitType } from './BlocklyInitType';
@@ -13,7 +13,9 @@ export interface BlocklyInfoType {
   state: () => BlocklyStateType;
   code: () => BlocklyCodeType;
   updateToolboxConfig: (
-    cb: (configuration: ToolboxDefinition) => ToolboxDefinition,
+    cb: (
+      configuration: Blockly.utils.toolbox.ToolboxDefinition,
+    ) => Blockly.utils.toolbox.ToolboxDefinition,
   ) => void;
   updateState: (cb: (state: BlocklyStateType) => BlocklyNewStateType) => void;
 }

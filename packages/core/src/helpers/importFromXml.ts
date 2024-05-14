@@ -1,12 +1,13 @@
-import Blockly, { WorkspaceSvg } from 'blockly';
+import * as Blockly from 'blockly';
 
 function importFromXml(
   xml: string,
-  workspace: WorkspaceSvg,
+  workspace: Blockly.WorkspaceSvg,
   onError?: (error: any) => void,
 ) {
   try {
     if (workspace.getAllBlocks(false).length > 0) return; // we won't load blocks again if they are already loaded
+    console.log(Blockly.utils.xml.textToDom(xml));
     Blockly.Xml.domToWorkspace(Blockly.utils.xml.textToDom(xml), workspace);
     return true;
   } catch (e) {

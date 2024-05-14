@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 
-import type { ToolboxDefinition } from 'blockly/core/utils/toolbox';
-import { type WebViewMessageEvent } from 'react-native-webview';
+import * as Blockly from 'blockly';
+import type { WebViewMessageEvent } from 'react-native-webview';
 
 import {
   htmlEditor,
@@ -35,7 +35,8 @@ const useBlocklyNativeEditor = (
   } = params ?? {};
   const editorRef = useRef<any>(null);
   const stateRef = useRef<BlocklyStateType>(BlocklyState());
-  const toolboxConfigRef = useRef<ToolboxDefinition | null>(null);
+  const toolboxConfigRef =
+    useRef<Blockly.utils.toolbox.ToolboxDefinition | null>(null);
   const readOnlyRef = useRef<boolean>(false);
   const codeRef = useRef<BlocklyCodeType>({
     dart: '',
@@ -93,7 +94,8 @@ const useBlocklyNativeEditor = (
           _onCallback(onError, data);
           break;
         case 'toolboxConfig':
-          toolboxConfigRef.current = data as ToolboxDefinition;
+          toolboxConfigRef.current =
+            data as Blockly.utils.toolbox.ToolboxDefinition;
           break;
       }
     } catch (err) {
@@ -102,11 +104,15 @@ const useBlocklyNativeEditor = (
   }
 
   function updateToolboxConfig(
-    cb: (configuration: ToolboxDefinition) => ToolboxDefinition,
+    cb: (
+      configuration: Blockly.utils.toolbox.ToolboxDefinition,
+    ) => Blockly.utils.toolbox.ToolboxDefinition,
   ) {
     try {
       if (cb && toolboxConfigRef.current) {
-        const configuration: ToolboxDefinition = cb(toolboxConfigRef.current);
+        const configuration: Blockly.utils.toolbox.ToolboxDefinition = cb(
+          toolboxConfigRef.current,
+        );
         if (configuration && !readOnlyRef.current) {
           postData('updateToolboxConfig', configuration);
         }

@@ -1,4 +1,4 @@
-import { WorkspaceSvg } from 'blockly';
+import * as Blockly from 'blockly';
 
 export interface BlocklyStateType {
   xml: string;
@@ -6,7 +6,7 @@ export interface BlocklyStateType {
 }
 
 export interface BlocklyCbStateType extends BlocklyStateType {
-  workspace?: null | WorkspaceSvg;
+  workspace?: null | Blockly.WorkspaceSvg;
   dart: string;
   js: string;
   lua: string;
