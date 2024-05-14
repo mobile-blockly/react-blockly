@@ -7,7 +7,6 @@ function importFromXml(
 ) {
   try {
     if (workspace.getAllBlocks(false).length > 0) return; // we won't load blocks again if they are already loaded
-    console.log(Blockly.utils.xml.textToDom(xml));
     Blockly.Xml.domToWorkspace(Blockly.utils.xml.textToDom(xml), workspace);
     return true;
   } catch (e) {
