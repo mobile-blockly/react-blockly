@@ -79,13 +79,17 @@ window.onload = () => {
     }
 
     function dispose() {
-      if (_workspace) {
-        _workspace.removeChangeListener(listener);
-        _workspace.dispose();
-        let _workspace = null;
-        let _toolboxConfig = null;
-        let _state = BlocklyState();
-        let _readOnly = false;
+      try {
+        if (_workspace) {
+          _workspace.removeChangeListener(listener);
+          _workspace.dispose();
+        }
+        _workspace = null;
+        _toolboxConfig = null;
+        _state = BlocklyState();
+        _readOnly = false;
+      } catch (err) {
+        onCallback('onError', err?.toString());
       }
     }
 
