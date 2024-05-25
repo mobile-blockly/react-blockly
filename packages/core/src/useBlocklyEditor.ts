@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 
-import * as Blockly from 'blockly';
+import * as Blockly from 'blockly/core';
+import 'blockly/blocks';
 import { dartGenerator } from 'blockly/dart';
 import { javascriptGenerator } from 'blockly/javascript';
 import { luaGenerator } from 'blockly/lua';

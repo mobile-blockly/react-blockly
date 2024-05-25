@@ -1,6 +1,6 @@
 import type { MutableRefObject } from 'react';
 
-import * as Blockly from 'blockly';
+import * as Blockly from 'blockly/core';
 
 import type { BlocklyCodeType } from './BlocklyCodeType';
 import type { BlocklyInitType } from './BlocklyInitType';

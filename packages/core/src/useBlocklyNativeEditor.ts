@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-import * as Blockly from 'blockly';
+import * as Blockly from 'blockly/core';
 import type { WebViewMessageEvent } from 'react-native-webview';
 
 import {
